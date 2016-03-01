@@ -1,0 +1,56 @@
+{% extends "precious/base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block head %}
+
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/ajax_search.js" %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Create new post -->
+<!-- <a href="{% url "new_post" %}" class="button"> NEW POST! </a> -->
+<input type="button" onclick="location.href='{% url "new_post" %}';" value=" New Post!" />
+
+<hr>
+
+<!-- List all Post objects -->
+{% for post in posts %}
+
+<a href="{% url "detail_post" pk=post.pk %}"> {{ post.title }} </a>  __ {{ post.updated_date }}<br/>
+
+{% endfor %}
+
+<hr>
+
+<!-- Search Posts -->
+<h3> Search </h3>
+
+{% csrf_token %}
+<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
+<input type='text' id='search' name='search'/>
+
+<br><br>
+<ul id='search_results' class="list-group">
+</ul>
+
+<hr>
+
+<!-- Category Search -->
+<h3> Categories  </h3>
+{% for category in categories %}
+    <button style='cursor:pointer;' class='category-text btn btn-default' id='{{category.text}}'> {{ category.text }} </button>&nbsp;
+{% endfor %}
+
+{% csrf_token %}
+<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
+<input type="text" name="category-text-name" id='category-text-input' hidden='true'/><br/>
+
+<br/>
+<ul id='category-search-results' class="list-group">
+</ul>
+
+{% endblock %}

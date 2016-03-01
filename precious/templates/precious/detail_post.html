@@ -1,0 +1,138 @@
+{% extends "precious/base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block head %}
+
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/detail_post.js" %}"></script>
+
+<!-- Prettify -->
+<link href="{% static "css/prettify.css" %}" rel="stylesheet" />
+<script src="{% static "js/prettify.js" %}"></script>
+<body onload="prettyPrint()">
+<style>
+li.L0, li.L1, li.L2, li.L3,
+li.L5, li.L6, li.L7, li.L8
+{ list-style-type: decimal !important }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Link in the same page examaple -->
+<!-- <a href="#Image">image</a><br/>
+<a name="image"></a> 
+ -->
+<!-- General information about the post -->
+Title: <h1> {{ post.title }} || {{ post.pk}} || <a href="{% url "delete_post" pk=post.pk %}"> Delete </a> || <a href="{% url "edit_post" pk=post.pk %}" >Edit</a> </h1><br/>
+
+{% if post.thumbnail %}
+    Thumbnail:  <img src="/static/{{ post.thumbnail }}" class='img-responsive'/><br/>
+{% endif %}
+Description: <p> {{ post.description }} </p><br/>
+Created Date: <p> {{ post.created_date }} </p><br/>
+Updated Date: <p> {{ post.updated_date }} </p><br/>
+Category: <p>|| {% for category in post.category.all %} {{ category }} || {% endfor %}</p>
+Index<br/>
+{% for item in all_items %}
+    {% if item.heading %}
+        <a href="#heading-{{item.pk}}">{{ item.position }} | {{ item.text }}</a><br/>
+    {% endif %}
+{% endfor %}
+    
+<hr>
+
+
+<!-- List all item belongs to the post -->
+{% for item in all_items %}
+    {% if item.image %} 
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Image:</small></sub> <img src="/static/{{ item.file_item }}" class='img-responsive'/><sub><small>{{ item.pk }} || <a href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+    
+    {% elif item.video %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Video:</small></sub> <br/>
+        <video width="400" controls>
+          <source src="/static/{{ item.file_item }}" type="video/mp4">
+          <source "/static/{{ item.file_item }}" type="video/ogg">
+        </video><br/><sub><small>{{ item.pk }}|| <a href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+
+    {% elif item.other %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} File:</small></sub> <a href="/static/{{ item.file_item }}"> {{ item.file_item }} </a><br/> <sub><small>{{ item.pk }} || <a href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+
+    {% elif item.paragraph %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Paragraph:</small></sub> <p>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub></p>
+
+    {% elif item.code %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Code:</small></sub> <br/><pre class="prettyprint linenums">{{ item.text }}</pre> <sub><small>{{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+
+    {% elif item.heading %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Heading:</small></sub> <h2><a name="heading-{{item.pk}}"></a>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub></h2>
+
+    {% elif item.subheading %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Subheading:</small></sub> <h3>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub></h3>
+    
+    {% elif item.subsubheading %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Subsubheading:</small></sub> <h4>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></h4>
+
+    {% elif item.list_item %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} List Item:</small></sub> <li>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub></li><br/>
+
+    {% elif item.inline_block %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Inline Block:</small></sub> <blockquote style="font-size:100%;">{{ item.text }}</blockquote> <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+
+    {% elif item.table %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Table:</small></sub> <p>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub></p>
+
+    {% elif item.link %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Link:</small></sub> <br/><a href="{{ item.text }}" target="_blank">{{ item.text }}</a> <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+
+    {% elif item.youtube %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Youtube:</small></sub> <br/><iframe width="560" height="315" src="https://www.youtube.com/embed/{{ item.text }}" frameborder="0" allowfullscreen></iframe><br/> <sub><small>{{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+
+    {% elif item.is_safe %}
+        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} SAFE:</small></sub> <br/> {{ item.text|safe }} <sub><small> {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+    {% endif %}
+{% endfor %}
+
+<!-- Create new general text -->
+<hr>
+<button class="btn btn-default text-type-adjuster" id='paragraph'> Paragraph </button>
+<button class="btn btn-default text-type-adjuster" id='heading'> Heading </button>
+<button class="btn btn-default text-type-adjuster" id='subheading'> Subheading </button>
+<button class="btn btn-default text-type-adjuster" id='subsubheading'> Subsubheading </button>
+<button class="btn btn-default text-type-adjuster" id='code'> Code </button>
+<button class="btn btn-default text-type-adjuster" id='list_item'> List Item </button>
+<button class="btn btn-default text-type-adjuster" id='inline_block'> Inline Block </button>
+<button class="btn btn-default text-type-adjuster" id='table'> Table </button>
+<button class="btn btn-default text-type-adjuster" id='link'> Link </button>
+<button class="btn btn-default text-type-adjuster" id='youtube'> Youtube </button>
+<button class="btn btn-default text-type-adjuster" id='is_safe'> SAFE </button>
+
+<br>
+<form id="text-form" method="post" action="{% url "new_general_text" pk=post.pk %}" enctype="multipart/form-data" hidden='True'>
+{% csrf_token %}
+{{ general_text_form|crispy }}
+<input type="text" name="item_type" id='text-type-input' hidden='True'/>
+<input class="btn btn-primary" type="submit" name="submit" value="Submit" />
+<button class="btn btn-danger" id='text-cancel'> Cancel </button>
+</form>
+
+<!-- Create new general file -->
+<br/>
+<button class="btn btn-default file-type-adjuster" id='image'> Image </button>
+<button class="btn btn-default file-type-adjuster" id='video'> Video </button>
+<button class="btn btn-default file-type-adjuster" id='other'> Other </button>
+
+<br><br>
+<form id="file-form" method="post" action="{% url "new_general_file" pk=post.pk %}" enctype="multipart/form-data" hidden='True'>
+{% csrf_token %}
+{{ general_file_form|crispy }}
+<input type="text" name="file_type" id='file-type-input' hidden='True'/>
+<input class="btn btn-primary" type="submit" name="submit" value="Submit" />
+<button class="btn btn-danger" id='file-cancel'> Cancel </button>
+</form>
+<br>
+
+
+{% endblock %}

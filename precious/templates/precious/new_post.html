@@ -1,0 +1,21 @@
+{% extends "precious/base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block content %}
+
+<form id="form" method="post" action="/new_post/" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form|crispy }}
+<input class="btn btn-default" type="submit" name="submit" value="Submit" />
+</form>
+
+<br/>
+
+New Category:
+<form id="form" method="post" action="/new_category/" enctype="multipart/form-data">
+{% csrf_token %}
+{{ category_form|crispy }}
+<input class="btn btn-default" type="submit" name="submit" value="Submit" />
+</form>
+
+{% endblock %}

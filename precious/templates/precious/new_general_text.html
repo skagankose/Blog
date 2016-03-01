@@ -1,0 +1,23 @@
+{% extends "precious/base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block head %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static "js/new_general_text.js" %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<button class="btn btn-default type-adjuster" id='code'> Code </button>
+<button class="btn btn-default type-adjuster" id='paragraph'> Paragraph </button>
+
+<form id="form" method="post" action="{% url "new_general_text" pk=post.pk %}" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form|crispy }}
+Item type: <input type="text" name="item_type" value="" size="50" id='type-input'/>
+<input class="btn btn-default" type="submit" name="submit" value="Submit" />
+
+{% endblock %}
