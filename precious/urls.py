@@ -11,6 +11,9 @@ urlpatterns = [
     # Create Post
     url(r'^new_post/$', views.new_post, name='new_post'),
 
+	# Create Post
+    url(r'^new_category/$', views.new_category, name='new_category'),
+
     # Create Category
     url(r'^new_category/$', views.new_category, name='new_category'),
 

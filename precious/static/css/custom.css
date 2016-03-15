@@ -1,0 +1,24 @@
+article p, button, form {
+	font-family:PT Mono;
+	font-size:13px;
+}
+
+.customized {
+	font-family:PT Mono;
+	font-size:13px;
+}
+
+aside{
+	font-family:PT Mono;
+	font-size:11px;
+}
+
+h4, h3, h2, .btn-default {
+	font-family:PT Mono;
+}
+
+footer {
+	font-family:PT Mono;
+	font-size:11px;
+
+}

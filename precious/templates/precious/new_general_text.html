@@ -18,6 +18,7 @@
 {% csrf_token %}
 {{ form|crispy }}
 Item type: <input type="text" name="item_type" value="" size="50" id='type-input'/>
+<a class="btn btn-default" onclick="goBack()">Cancel</a>
 <input class="btn btn-default" type="submit" name="submit" value="Submit" />
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.db import models
 
-# Import time 
+# Import time
 from django.utils import timezone
 
 class Category(models.Model):
@@ -11,10 +11,10 @@ class Category(models.Model):
         try:
             Category.objects.get(text=self.text)
         except:
-            super(Category, self).save(*args, **kwargs)       
+            super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.text 
+        return self.text
 
 # Post model
 class Post(models.Model):
@@ -37,42 +37,43 @@ class Post(models.Model):
             this = Post.objects.get(pk=self.pk)
             if this.thumbnail != self.thumbnail:
                 this.thumbnail.delete(save=False)
-        except: pass       
+        except: pass
         super(Post, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['-created_date']
 
     def __str__(self):
-        return str(self.pk) + '-' +  self.title 
+        return str(self.pk) + '-' +  self.title
 
 # GeneralFile model
 class GeneralFile(models.Model):
-    post = models.ForeignKey(Post, related_name='general_files')
-    position = models.IntegerField(default=9999)
-    file_item = models.FileField(upload_to='file/', blank=True)
-    image = models.BooleanField(default=False)
-    video = models.BooleanField(default=False)
-    other = models.BooleanField(default=False)
-    edited = models.BooleanField(default=False)
+	post = models.ForeignKey(Post, related_name='general_files')
+	position = models.IntegerField(default=9999)
+	file_item = models.FileField(upload_to='file/', blank=True)
+	image = models.BooleanField(default=False)
+	video = models.BooleanField(default=False)
+	other = models.BooleanField(default=False)
+	edited = models.BooleanField(default=False)
 
-    def delete(self, *args, **kwargs):
-        self.file_item.delete()
-        super(GeneralFile, self).delete(*args, **kwargs)
 
-    def save(self, *args, **kwargs):
-        try:
-            this = GeneralFile.objects.get(pk=self.pk)
-            if this.file_item != self.file_item:
-                this.file_item.delete(save=False)
-        except: pass       
-        super(GeneralFile, self).save(*args, **kwargs)
+	def delete(self, *args, **kwargs):
+	    self.file_item.delete()
+	    super(GeneralFile, self).delete(*args, **kwargs)
 
-    class Meta:
-        ordering = ['position']
+	def save(self, *args, **kwargs):
+	    try:
+	        this = GeneralFile.objects.get(pk=self.pk)
+	        if this.file_item != self.file_item:
+	            this.file_item.delete(save=False)
+	    except: pass
+	    super(GeneralFile, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return 'file-' + str(self.pk)
+	class Meta:
+	    ordering = ['position']
+
+	def __str__(self):
+	    return 'file-' + str(self.pk)
 
 # GeneralText model
 class GeneralText(models.Model):

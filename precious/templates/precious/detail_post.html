@@ -17,39 +17,72 @@ li.L5, li.L6, li.L7, li.L8
 { list-style-type: decimal !important }
 </style>
 
+<script>
+function clicked(e) { if(!confirm('Think Twice before Deleting!'))e.preventDefault(); }
+</script>
+
 {% endblock %}
 
 {% block content %}
 
-<!-- Link in the same page examaple -->
-<!-- <a href="#Image">image</a><br/>
-<a name="image"></a> 
- -->
-<!-- General information about the post -->
-Title: <h1> {{ post.title }} || {{ post.pk}} || <a href="{% url "delete_post" pk=post.pk %}"> Delete </a> || <a href="{% url "edit_post" pk=post.pk %}" >Edit</a> </h1><br/>
+<h3>
+	<!-- Title -->
+	{{ post.title }}<br/>
 
+	<small>
+		<!-- Tags -->
+		{% for category in post.category.all %}{{ category }} {% endfor %}<br/>
+
+		<!-- Dates -->
+		{{ post.updated_date|cut_date }} {{ post.created_date|cut_date }}<br/>
+	</small>
+</h3>
+
+<!-- Thumbnail -->
 {% if post.thumbnail %}
-    Thumbnail:  <img src="/static/{{ post.thumbnail }}" class='img-responsive'/><br/>
+    <img src="/static/{{ post.thumbnail }}" class='img-responsive' style="width:900px;height="auto";}}px;"//><br/>
 {% endif %}
-Description: <p> {{ post.description }} </p><br/>
-Created Date: <p> {{ post.created_date }} </p><br/>
-Updated Date: <p> {{ post.updated_date }} </p><br/>
-Category: <p>|| {% for category in post.category.all %} {{ category }} || {% endfor %}</p>
-Index<br/>
-{% for item in all_items %}
-    {% if item.heading %}
-        <a href="#heading-{{item.pk}}">{{ item.position }} | {{ item.text }}</a><br/>
-    {% endif %}
-{% endfor %}
-    
-<hr>
 
+<!-- Description -->
+<p class="customized"> {{ post.description }} </p>
+
+<!-- Headings as Index -->
+<p>
+{% for item in all_items %}
+	{% if item.heading %}
+		{{ forloop.counter }} <a class="customized" href="#heading-{{item.pk}}"> {{ item.text }} </a><br/>
+	{% endif %}
+{% endfor %}
+</p>
+
+<!-- Delete & Edit -->
+<a class="btn btn-default btn-xs" href="{% url "edit_post" pk=post.pk %}"><i class="fa fa-pencil"></i></a>
+<a class="btn btn-default btn-xs" href="{% url "delete_post" pk=post.pk %}" onclick="clicked(event)"><i class="fa fa-trash-o"></i></a>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<hr>
+	</div>
+	<div class="col-md-0">
+	</div>
+</div>
 
 <!-- List all item belongs to the post -->
 {% for item in all_items %}
-    {% if item.image %} 
-        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Image:</small></sub> <img src="/static/{{ item.file_item }}" class='img-responsive'/><sub><small>{{ item.pk }} || <a href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
-    
+   {% if item.image %}
+	<p>
+		<small class="editorMode">
+			<a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+		   <a class="btn btn-default btn-xs disabled"> <i class="fa fa-picture-o"></i> {% if item.edited %} </a>
+		   <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> {% endif %} </a>
+			&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-default btn-xs" href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+			<a class="btn btn-default btn-xs" href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+	   </small>
+		<img src="/static/{{ item.file_item }}" class='img-responsive' style="width:450px;height="auto";}}px;"/>
+	</p>
+
     {% elif item.video %}
         <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Video:</small></sub> <br/>
         <video width="400" controls>
@@ -60,18 +93,50 @@ Index<br/>
     {% elif item.other %}
         <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} File:</small></sub> <a href="/static/{{ item.file_item }}"> {{ item.file_item }} </a><br/> <sub><small>{{ item.pk }} || <a href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
 
-    {% elif item.paragraph %}
-        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Paragraph:</small></sub> <p>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub></p>
+	{% elif item.paragraph %}
+	<p>
+		<small class="editorMode">
+			<a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+		   <a class="btn btn-default btn-xs disabled"> <i class="fa fa-file-text-o"></i> </a>
+			{% if item.edited %} <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a> {% endif %}
+			&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+			<a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+		</small>
+		<p> {{ item.text }} </p>
+	</p>
+
 
     {% elif item.code %}
-        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Code:</small></sub> <br/><pre class="prettyprint linenums">{{ item.text }}</pre> <sub><small>{{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
+	 <p>
+ 		<small class="editorMode">
+ 			<a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+ 		   <a class="btn btn-default btn-xs disabled"> <i class="fa fa-file-code-o"></i> </a>
+ 			{% if item.edited %} <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a> {% endif %}
+			&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+ 		   <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+ 		</small>
+ 		<pre class="prettyprint linenums">{{ item.text }}</pre>
+ 	</p>
+
 
     {% elif item.heading %}
-        <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Heading:</small></sub> <h2><a name="heading-{{item.pk}}"></a>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub></h2>
+
+			<small class="editorMode">
+	 			<a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+	 		   <a class="btn btn-default btn-xs disabled"> <i class="fa fa-file-text"></i> </a>
+	 			{% if item.edited %} <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a> {% endif %}
+				&nbsp;&nbsp;&nbsp;
+				<a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+	 		   <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+	 		</small>
+			<h2><a name="heading-{{item.pk}}"></a>{{ item.text }}</h2>
+
 
     {% elif item.subheading %}
         <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Subheading:</small></sub> <h3>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub></h3>
-    
+
     {% elif item.subsubheading %}
         <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} Subsubheading:</small></sub> <h4>{{ item.text }} <sub><small> || {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></h4>
 
@@ -93,46 +158,48 @@ Index<br/>
     {% elif item.is_safe %}
         <sub><small>{% if item.edited %} EDITED || {% endif %}{{ item.position }} SAFE:</small></sub> <br/> {{ item.text|safe }} <sub><small> {{ item.pk }} || <a href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> Delete </a> || <a href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > Edit</a></small></sub><br/><br/>
     {% endif %}
+
+	 <hr class="editorMode">
 {% endfor %}
 
 <!-- Create new general text -->
-<hr>
-<button class="btn btn-default text-type-adjuster" id='paragraph'> Paragraph </button>
-<button class="btn btn-default text-type-adjuster" id='heading'> Heading </button>
-<button class="btn btn-default text-type-adjuster" id='subheading'> Subheading </button>
-<button class="btn btn-default text-type-adjuster" id='subsubheading'> Subsubheading </button>
-<button class="btn btn-default text-type-adjuster" id='code'> Code </button>
-<button class="btn btn-default text-type-adjuster" id='list_item'> List Item </button>
-<button class="btn btn-default text-type-adjuster" id='inline_block'> Inline Block </button>
-<button class="btn btn-default text-type-adjuster" id='table'> Table </button>
-<button class="btn btn-default text-type-adjuster" id='link'> Link </button>
-<button class="btn btn-default text-type-adjuster" id='youtube'> Youtube </button>
-<button class="btn btn-default text-type-adjuster" id='is_safe'> SAFE </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='paragraph'> Paragraph </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='heading'> Heading </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='subheading'> Subheading </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='subsubheading'> Subsubheading </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='code'> Code </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='list_item'> List Item </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='inline_block'> Inline Block </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='table'> Table </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='link'> Link </button>
+<button class="btn btn-default text-type-adjuster btn-xs" id='youtube'> Youtube </button>
+<button class="btn btn-danger text-type-adjuster btn-xs" id='is_safe'> SAFE </button>
+<br/>
 
 <br>
 <form id="text-form" method="post" action="{% url "new_general_text" pk=post.pk %}" enctype="multipart/form-data" hidden='True'>
 {% csrf_token %}
 {{ general_text_form|crispy }}
 <input type="text" name="item_type" id='text-type-input' hidden='True'/>
-<input class="btn btn-primary" type="submit" name="submit" value="Submit" />
 <button class="btn btn-danger" id='text-cancel'> Cancel </button>
+<input class="btn btn-primary" type="submit" name="submit" value="Submit" />
 </form>
 
 <!-- Create new general file -->
 <br/>
-<button class="btn btn-default file-type-adjuster" id='image'> Image </button>
-<button class="btn btn-default file-type-adjuster" id='video'> Video </button>
-<button class="btn btn-default file-type-adjuster" id='other'> Other </button>
+<button class="btn btn-default file-type-adjuster btn-xs" id='image'> Image </button>
+<button class="btn btn-default file-type-adjuster btn-xs" id='video'> Video </button>
+<button class="btn btn-default file-type-adjuster btn-xs" id='other'> Other </button>
+<br/><br/>
 
-<br><br>
 <form id="file-form" method="post" action="{% url "new_general_file" pk=post.pk %}" enctype="multipart/form-data" hidden='True'>
 {% csrf_token %}
 {{ general_file_form|crispy }}
 <input type="text" name="file_type" id='file-type-input' hidden='True'/>
-<input class="btn btn-primary" type="submit" name="submit" value="Submit" />
 <button class="btn btn-danger" id='file-cancel'> Cancel </button>
+<input class="btn btn-primary" type="submit" name="submit" value="Submit" />
 </form>
-<br>
 
+<br><br><br><br>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.template.defaulttags import register
 
 # Combine query sets
 from itertools import chain
@@ -11,7 +12,12 @@ from django.utils import timezone
 from .forms import PostForm, GeneralTextForm, GeneralFileForm, CategoryForm, EditGeneralTextForm, EditGeneralFileForm, EditPostForm
 from .models import Post, GeneralText, GeneralFile, Category
 
-# Homepage 
+@register.filter
+def cut_date(date):
+	splitted = str(date).split()[0].split("-")
+	return splitted[0][2:5] + splitted[1] + splitted[2]
+
+# Homepage
 def homepage(request):
 
     categories = Category.objects.all()
@@ -34,23 +40,25 @@ def new_post(request):
             return HttpResponse(status=204)
     else:
         form  = PostForm()
-        category_form = CategoryForm()
 
-    context = {'form': form, 'category_form': category_form,}
+    context = {'form': form,}
     return render(request,'precious/new_post.html', context)
 
 # Create Post
 def new_category(request):
 
-    if request.method == 'POST':
-        form  = CategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/new_post/')
-        else:
-            return HttpResponse(status=204)
-    else:
-        return HttpResponse(status=204)
+	if request.method == 'POST':
+		form  = CategoryForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/new_post/')
+		else:
+			return HttpResponse(status=204)
+	else:
+		category_form = CategoryForm()
+
+	context = {'category_form': category_form,}
+	return render(request,'precious/new_category.html', context)
 
 # Create GeneralText
 def new_general_text(request, pk):
@@ -132,13 +140,13 @@ def detail_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     general_text_form  = GeneralTextForm()
     general_file_form = GeneralFileForm()
-    general_texts = post.general_texts.all()    
+    general_texts = post.general_texts.all()
     general_files = post.general_files.all()
     all_items = sorted(
                 chain(general_texts, general_files),
                 key=lambda instance: instance.position)
-    
-    context = {'post': post, 
+
+    context = {'post': post,
                'general_texts': general_texts,
                'general_files': general_files,
                'all_items': all_items,

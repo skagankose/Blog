@@ -6,6 +6,7 @@
 
         <form id="form" method="post" action="{% url "edit_general_file" pk=post.pk pks=general_file.pk %}" enctype="multipart/form-data">{% csrf_token %}
             {{ form|crispy }}
+			<a class="btn btn-default" onclick="goBack()">Cancel</a>
         <input class="btn btn-default" type="submit" name="submit" value="Submit" />
         </form>
 

@@ -11,46 +11,54 @@
 
 {% block content %}
 
-<!-- Create new post -->
-<!-- <a href="{% url "new_post" %}" class="button"> NEW POST! </a> -->
-<input type="button" onclick="location.href='{% url "new_post" %}';" value=" New Post!" />
+<div class="row">
+	<aside class="col-md-3 sidebar sidebar-left">
 
-<hr>
 
-<!-- List all Post objects -->
-{% for post in posts %}
+		<!-- Category Search -->
+		<h4> Tags  </h4>
+		<p style="color:#0084B4;">
+		{% for category in categories %}
+		    #<a style='cursor:pointer;' class='category-text' id='{{category.text}}'>{{ category.text }} </a>
+		{% endfor %}
+		</p>
 
-<a href="{% url "detail_post" pk=post.pk %}"> {{ post.title }} </a>  __ {{ post.updated_date }}<br/>
+		{% csrf_token %}
+		<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
+		<input type="text" name="category-text-name" id='category-text-input' hidden='true'/><br/>
 
-{% endfor %}
+		<br/>
+		<ul id='category-search-results' class="list-group">
+		</ul>
 
-<hr>
+	</aside>
 
-<!-- Search Posts -->
-<h3> Search </h3>
+	<article class="col-md-6 maincontent">
 
-{% csrf_token %}
-<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
-<input type='text' id='search' name='search'/>
+		{% for post in posts %}
 
-<br><br>
-<ul id='search_results' class="list-group">
-</ul>
+		<p> {{ post.updated_date|cut_date }} - <a href="{% url "detail_post" pk=post.pk %}"> {{ post.title }} </a> </p>
 
-<hr>
+		{% endfor %}
 
-<!-- Category Search -->
-<h3> Categories  </h3>
-{% for category in categories %}
-    <button style='cursor:pointer;' class='category-text btn btn-default' id='{{category.text}}'> {{ category.text }} </button>&nbsp;
-{% endfor %}
+	</article>
 
-{% csrf_token %}
-<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
-<input type="text" name="category-text-name" id='category-text-input' hidden='true'/><br/>
+	<aside class="col-md-3 sidebar sidebar-right">
 
-<br/>
-<ul id='category-search-results' class="list-group">
-</ul>
+		<!-- Search Posts -->
+		<h4> Search </h4>
+
+		{% csrf_token %}
+		<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
+		<input type='text' id='search' name='search'/>
+
+		<br><br>
+		<ul id='search_results' class="list-group">
+		</ul>
+
+	</aside>
+
+
+</div>
 
 {% endblock %}
