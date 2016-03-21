@@ -1,43 +1,41 @@
-{% extends "precious/base.html" %}
+{% extends "precious/newBase.html" %}
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block head %}
-
-<script src="{% static "js/jquery.min.js" %}"></script>
-<script src="{% static "js/ajax_search.js" %}"></script>
-
-{% endblock %}
+{% block image %}home.jpg{% endblock %}
+{% block header %}{% endblock %}
 
 {% block content %}
 
-<div class="row">
+    <div class="row">
 	<aside class="col-md-3 sidebar sidebar-left">
 
 
 		<!-- Category Search -->
 		<h4> Tags  </h4>
-		<p style="color:#0084B4;">
+		<p class="home_element">
 		{% for category in categories %}
-		    #<a style='cursor:pointer;' class='category-text' id='{{category.text}}'>{{ category.text }} </a>
+		    <a style='cursor:pointer;' class='category-text home_link' id='{{category.text}}'>{{ category.text }}</a>
 		{% endfor %}
 		</p>
 
 		{% csrf_token %}
 		<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
-		<input type="text" name="category-text-name" id='category-text-input' hidden='true'/><br/>
+		<input type="text" name="category-text-name" id='category-text-input' hidden='true'/>
 
-		<br/>
-		<ul id='category-search-results' class="list-group">
-		</ul>
+		<div id='category-search-results' class="list-group"></div>
 
 	</aside>
 
 	<article class="col-md-6 maincontent">
 
+		<h4> Posts  </h4>
+
+		<div class="list-group">
+
 		{% for post in posts %}
 
-		<p> {{ post.updated_date|cut_date }} - <a href="{% url "detail_post" pk=post.pk %}"> {{ post.title }} </a> </p>
+		<a type="button" class="list-group-item home_element" href="{% url "newPost" pk=post.pk %}"> {{ post.title }} </a>
 
 		{% endfor %}
 
@@ -50,15 +48,33 @@
 
 		{% csrf_token %}
 		<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
-		<input type='text' id='search' name='search'/>
+		<input class="home_element" type='text' id='search' name='search'/>
 
-		<br><br>
-		<ul id='search_results' class="list-group">
-		</ul>
+		<br/><br/>
+		<div id='search_results' class="list-group"></div>
 
 	</aside>
 
+{% endblock %}
 
-</div>
+{% block script %}
+
+	{% if post.is_editor %}
+	   <script>
+	   $(document).ready(function() {
+		   $('.editorMode').show();
+		   $('.offButton').hide();
+		   $('.onButton').show();
+	   })
+	   </script>
+	{% else %}
+	   <script>
+	   $(document).ready(function() {
+		   $('.editorMode').hide();
+		   $('.offButton').show();
+		   $('.onButton').hide();
+	   })
+	   </script>
+	{% endif %}
 
 {% endblock %}

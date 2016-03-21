@@ -1,0 +1,42 @@
+h2, p, button, form, input, blockquote, .caption, h3, h4, li, form, .btn, .home_element, .home_element_2 {
+	font-family: PT Mono;
+}
+
+pre {
+	font-family: PT Mono;
+	background-color: black;
+	font-size: 15px;
+    color: #00FF00;
+}
+
+.submitButton:hover, .active {
+	font-weight: bold;
+}
+
+.btn {
+    text-decoration: none;
+}
+.is_black {
+    color:black;
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+
+.text-type-adjuster, .file-type-adjuster {
+    cursor: pointer;
+}
+
+.home_element {
+	font-size: 15px;
+}
+
+.home_element_2 {
+	font-size: 13px;
+}
+
+.home_link {
+	text-decoration: none;
+}

@@ -2,11 +2,10 @@
 {% if posts.count > 0 %}
     {% for post in posts %}
 
-    <li class="list-group-item customized11" ><a href='{% url "detail_post" pk=post.pk %}'> {{ post.title }} </a></li>
-
+    <a type="button" class="list-group-item customized11 home_element_2" href='{% url "newPost" pk=post.pk %}'> {{ post.title }} </a>
     {% endfor %}
 {% else %}
 
-    <li class="list-group-item customized11"> N/A </li>
+    <a class="list-group-item customized11 home_element_2"> N/A </a>
 
 {% endif %}

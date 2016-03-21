@@ -1,15 +1,19 @@
-{% extends "precious/base.html" %}
+{% extends "precious/newBase.html" %}
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
+{% block image %}edit.jpg{% endblock %}
+{% block header %}{% endblock %}
+
 {% block content %}
 
+    <p>
         <form id="form" method="post" action="{% url "edit_post" pk=post.pk %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
         <input class="btn btn-default" type="submit" name="submit" value="Submit" />
         </form>
 
-		  <br/><br/><br/><br/><br/>
+    </p>
 
 {% endblock %}

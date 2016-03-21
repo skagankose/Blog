@@ -1,13 +1,17 @@
-{% extends "precious/base.html" %}
+{% extends "precious/newBase.html" %}
 {% load crispy_forms_tags %}
 {% load staticfiles %}
+
+{% block image %}edit.jpg{% endblock %}
+{% block header %}{% endblock %}
+
 
 {% block content %}
 
         <form id="form" method="post" action="{% url "edit_general_file" pk=post.pk pks=general_file.pk %}" enctype="multipart/form-data">{% csrf_token %}
             {{ form|crispy }}
-			<a class="btn btn-default" onclick="goBack()">Cancel</a>
         <input class="btn btn-default" type="submit" name="submit" value="Submit" />
+        <a class="btn btn-default" onclick="goBack()">Cancel</a>
         </form>
 
 {% endblock %}

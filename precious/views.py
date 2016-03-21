@@ -98,7 +98,7 @@ def new_general_text(request, pk):
 
             general_text.position = post.item_position
             general_text.save()
-            return HttpResponseRedirect('/detail_post/' + pk)
+            return HttpResponseRedirect('/newPost/' + pk)
         else:
             return HttpResponse(status=204)
     else:
@@ -128,14 +128,14 @@ def new_general_file(request, pk):
 
         if general_file.file_item  != None:
             general_file.save()
-            return HttpResponseRedirect('/detail_post/' + pk)
+            return HttpResponseRedirect('/newPost/' + pk)
         else:
             return HttpResponse(status=204)
     else:
         return HttpResponse(status=204)
 
 # Look Post in details
-def detail_post(request, pk):
+def newPost(request, pk):
 
     post = get_object_or_404(Post, pk=pk)
     general_text_form  = GeneralTextForm()
@@ -153,13 +153,13 @@ def detail_post(request, pk):
                'general_text_form': general_text_form,
                'general_file_form': general_file_form,}
 
-    return render(request, 'precious/detail_post.html', context)
+    return render(request, 'precious/newPost.html', context)
 
 # Delete GeneralText
 def delete_general_text(request, pk, ppk):
     general_text = get_object_or_404(GeneralText, pk=pk)
     general_text.delete()
-    return HttpResponseRedirect('/detail_post/' + ppk)
+    return HttpResponseRedirect('/newPost/' + ppk)
 
 # Delete GeneralText
 def delete_post(request, pk):
@@ -171,7 +171,7 @@ def delete_post(request, pk):
 def delete_general_file(request, pk, ppk):
     general_file = get_object_or_404(GeneralFile, pk=pk)
     general_file.delete()
-    return HttpResponseRedirect('/detail_post/' + ppk)
+    return HttpResponseRedirect('/newPost/' + ppk)
 
 # AJAX search
 def post_search(request):
@@ -212,7 +212,7 @@ def edit_general_text(request, pk, pks):
             edited_general_text = form.save(commit=False)
             edited_general_text.edited = True
             edited_general_text.save()
-            return HttpResponseRedirect('/detail_post/' + pk)
+            return HttpResponseRedirect('/newPost/' + pk)
     else:
         form = EditGeneralTextForm(instance=general_text)
 
@@ -229,7 +229,7 @@ def edit_general_file(request, pk, pks):
             edited_general_file = form.save(commit=False)
             edited_general_file.edited = True
             edited_general_file.save()
-            return HttpResponseRedirect('/detail_post/' + pk)
+            return HttpResponseRedirect('/newPost/' + pk)
     else:
         form = EditGeneralFileForm(instance=general_file)
 
@@ -249,8 +249,44 @@ def edit_post(request, pk):
             edited_post.thumbnail = request.FILES.get('thumbnail', None)
             if edited_post.thumbnail != None:
                     edited_post.save()
-            return HttpResponseRedirect('/detail_post/' + pk)
+            return HttpResponseRedirect('/newPost/' + pk)
     else:
             form = EditPostForm(instance=post)
     context = {'form': form, 'post': post}
     return render(request,'precious/update_post.html', context)
+
+def editor_on(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.is_editor = True
+    post.save()
+    return HttpResponseRedirect('/newPost/' + str(pk) + '/')
+
+def editor_off(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.is_editor = False
+    post.save()
+    return HttpResponseRedirect('/newPost/' + str(pk) + '/')
+
+def new_base(request):
+    return render(request,'precious/newBase.html', {})
+
+# Look Post in details
+def newPost(request, pk):
+
+    post = get_object_or_404(Post, pk=pk)
+    general_text_form  = GeneralTextForm()
+    general_file_form = GeneralFileForm()
+    general_texts = post.general_texts.all()
+    general_files = post.general_files.all()
+    all_items = sorted(
+                chain(general_texts, general_files),
+                key=lambda instance: instance.position)
+
+    context = {'post': post,
+               'general_texts': general_texts,
+               'general_files': general_files,
+               'all_items': all_items,
+               'general_text_form': general_text_form,
+               'general_file_form': general_file_form,}
+
+    return render(request, 'precious/newPost.html', context)

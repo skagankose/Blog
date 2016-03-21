@@ -27,6 +27,7 @@ class Post(models.Model):
     item_position = models.IntegerField(default=0)
     category = models.ManyToManyField(Category, related_name='posts')
     edited = models.BooleanField(default=False)
+    is_editor = models.BooleanField(default=True)
 
     def delete(self, *args, **kwargs):
         self.thumbnail.delete()
@@ -88,9 +89,7 @@ class GeneralText(models.Model):
     list_item = models.BooleanField(default=False)
     inline_block = models.BooleanField(default=False)
     code = models.BooleanField(default=False)
-    table = models.BooleanField(default=False)
     link = models.BooleanField(default=False)
-    youtube = models.BooleanField(default=False)
     is_safe = models.BooleanField(default=False)
     edited = models.BooleanField(default=False)
 

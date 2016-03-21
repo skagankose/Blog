@@ -13,8 +13,14 @@ aside{
 	font-size:11px;
 }
 
-h4, h3, h2, .btn-default {
+h4, h3, h2, .btn-default{
 	font-family:PT Mono;
+}
+
+.headerItem {
+	font-family:PT Mono;
+	font-size: 13px;
+
 }
 
 footer {

@@ -1,14 +1,18 @@
-{% extends "precious/base.html" %}
+{% extends "precious/newBase.html" %}
 {% load crispy_forms_tags %}
 {% load staticfiles %}
+
+{% block image %}category.jpg{% endblock %}
+{% block header %}{% endblock %}
+
+
 {% block content %}
 
-	<h4>  New Category  </h4>
-	<form id="form" method="post" action="/new_category/" enctype="multipart/form-data">
-		{% csrf_token %}
-		{{ category_form|crispy }}
-		<a class="btn btn-default" onclick="goBack()">Cancel</a>
-		<input class="btn btn-default" type="submit" name="submit" value="Submit" />
-	</form>
+			<form id="form" method="post" action="/new_category/" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ category_form|crispy }}
+				<input class="btn btn-default" type="submit" name="submit" value="Submit" />
+				<a class="btn btn-default" onclick="goBack()">Cancel</a>
+			</form>
 
 {% endblock %}

@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^new_general_file/(?P<pk>[0-9]+)/$', views.new_general_file, name='new_general_file'),
 
     # Look Post in details
-    url(r'^detail_post/(?P<pk>[0-9]+)/$', views.detail_post, name='detail_post'),
+    url(r'^newPost/(?P<pk>[0-9]+)/$', views.newPost, name='newPost'),
 
     # Edit existing Post
     url(r'^edit_post/(?P<pk>[0-9]+)/$', views.edit_post, name='edit_post'),
@@ -49,4 +49,10 @@ urlpatterns = [
 
     # Delete GeneralFile
     url(r'^delete_general_file/(?P<pk>[0-9]+)/(?P<ppk>[0-9]+)/$', views.delete_general_file, name='delete_general_file'),
+
+    # Editor On
+    url(r'^editor_on/(?P<pk>[0-9]+)/', views.editor_on, name='editor_on'),
+
+    # Editor Off
+    url(r'^editor_off/(?P<pk>[0-9]+)/', views.editor_off, name='editor_off'),
 ]
