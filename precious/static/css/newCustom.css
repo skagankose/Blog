@@ -1,4 +1,4 @@
-h2, p, button, form, input, blockquote, .caption, h3, h4, li, form, .btn {
+h1, h2, p, button, form, input, blockquote, .caption, h3, h4, li, form, .btn {
 	font-family: PT Mono;
 }
 
@@ -25,6 +25,7 @@ video {
     height: auto;
 }
 
+
 .text-type-adjuster, .file-type-adjuster {
     cursor: pointer;
 }
@@ -50,4 +51,12 @@ video {
 	letter-spacing: 1px
 	cursor:pointer;
 	color:white;
+}
+
+.thirdHeading {
+	font-size: 23px;
+}
+
+.secondHeading {
+	font-size: 27px;
 }

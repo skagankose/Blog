@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Çuval</title>
+    <title>Seyahatname</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
@@ -56,10 +56,15 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
 
+
                     <li><a class="offButton"href="{% url "editor_on" pk=post.pk %}"><i class="fa fa-toggle-off"></i></a></li>
                     <li><a class="onButton" href="{% url "editor_off" pk=post.pk %}"><i class="fa fa-toggle-on"></i></a></li>
+                    <li><a href="#bottom" class="button"> Bottom </a></li>
+                    <li><a href="{% url "search" %}" class="button"> Search </a></li>
+                    <li><a href="{% url "tags" %}" class="button"> Tags </a></li>
                     <li><a class="customized" href="{% url "new_post" %}" class="button"> New Entry </a></li>
                     <li><a class="customized" href="{% url "new_category" %}" class="button"> New Category </a></li>
+
 
                 </ul>
             </div>
@@ -78,9 +83,21 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading" >
-                        <h1>{{ post.title }}</h1>
-                        <h2 class="subheading">{{ post.description }}</h2>
-                        <span class="meta">{{ post.created_date}} {{ post.updated_date}}</span>
+                        <h1>
+                            {{ post.title }}
+                        </h1>
+                        <h2 class="subheading"
+                            style="font-family:PT Mono;
+                                   font-weight:normal;
+                                   font-size:23px;">
+                            {{ post.description }}
+                        </h2>
+                        <span class="post-meta"
+                              style="font-style: italic;
+                                     font-family: PT Mono;
+                                     color:rgba(255, 255, 255, 0.50)">
+                                     <i class="fa fa-calendar-plus-o"></i> {{ post.updated_date|cut_date}}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -97,7 +114,6 @@
                 <a class="btn btn-default editorMode" href="{% url "edit_post" pk=post.pk %}"> <i class="fa fa-pencil"></i> </a>
                 <a class="btn btn-default editorMode" href="{% url "delete_post" pk=post.pk %}" onclick="clicked(event)">  <i class="fa fa-trash-o"></i>  </a>
                 </p>
-
 
                 <!-- <div class="row">
                 <div class="col-md-7">
@@ -217,7 +233,7 @@
                     <div>
                     {% endif %}
 
-                    <h3>{{ item.text }}</h3>
+                    <h3 class="secondHeading">{{ item.text }}</h3>
 
                     </div>
 
@@ -244,7 +260,7 @@
                     {% else %}
                     <div>
                     {% endif %}
-                    <h4>{{ item.text }}</h4>
+                    <h4 class="thirdHeading">{{ item.text }}</h4>
 
                     </div>
 
@@ -267,7 +283,9 @@
                     <div>
                     {% endif %}
 
+                    <ul>
                     <li>{{ item.text }} </li>
+                    </ul>
 
                     </div>
 
@@ -310,7 +328,7 @@
                     <div>
                     {% endif %}
 
-                    <a href="#"> <img class="img-responsive" src="/static/{{ item.file_item }}" alt=""> </a></p>
+                    <a href="/static/{{ item.file_item }}"> <img class="img-responsive" src="/static/{{ item.file_item }}" alt=""> </a></p>
 
                     <!-- <span class="caption text-muted">
                         Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -358,7 +376,7 @@
                     <div>
                     {% endif %}
 
-                    <video controls>
+                    <video controls  poster="/static/img/videoDefault.jpg">
                 		<source src="/static/{{ item.file_item }}" type="video/mp4">
                 		<source "/static/{{ item.file_item }}" type="video/ogg">
                 	</video>
@@ -390,6 +408,8 @@
                 {% endif %}
 
                 {% endfor %}
+
+                <div><a name="bottom"></a><div>
 
                 <!-- Create new general text -->
                 <p class="editorMode">
@@ -436,19 +456,6 @@
             </div>
         </div>
     </article>
-
-    <!-- <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <p class="copyright text-muted">
-                        Built for himself by <a target="_blank" href="https://www.twitter.com/skagankose">Suha Kagan Kose</a>,
-                        Copyright &copy; 2016
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer> -->
 
     <hr>
     <!-- Footer -->

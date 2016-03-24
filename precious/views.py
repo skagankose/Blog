@@ -14,8 +14,9 @@ from .models import Post, GeneralText, GeneralFile, Category
 
 @register.filter
 def cut_date(date):
-	splitted = str(date).split()[0].split("-")
-	return splitted[0][2:5] + splitted[1] + splitted[2]
+	# splitted = str(date).split()[0].split("-")
+	# return splitted[0][2:5] + splitted[1] + splitted[2]
+	return str(date.strftime('%B')) + " " + str(date.day) + ",  " + str(date.year)
 
 # Homepage
 def homepage(request):
