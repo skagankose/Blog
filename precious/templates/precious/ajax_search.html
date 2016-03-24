@@ -2,10 +2,28 @@
 {% if posts.count > 0 %}
     {% for post in posts %}
 
-    <a type="button" class="list-group-item customized11 home_element_2" href='{% url "newPost" pk=post.pk %}'> {{ post.title }} </a>
+    <a href="{% url "newPost" pk=post.pk %}">
+        <h2 class="post-title">
+        {{ post.title }}
+        </h2>
+        <h3 class="post-subtitle">
+        {{ post.description }}
+        </h3>
+    </a>
+    <p class="post-meta">{{ post.created_date|cut_date }}:{{ post.updated_date|cut_date }}</p>
+    <hr>
+
+    <!-- <a type="button" class="list-group-item customized11 home_element_2" href='{% url "newPost" pk=post.pk %}'> {{ post.title }} </a> -->
     {% endfor %}
 {% else %}
 
-    <a class="list-group-item customized11 home_element_2"> N/A </a>
+    <h2 class="post-title">
+    n/a
+    </h2>
+    <h3 class="post-subtitle">
+    &nbsp;
+    </h3>
+    <p class="post-meta">&nbsp;</p>
+    <hr>
 
 {% endif %}

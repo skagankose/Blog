@@ -25,6 +25,23 @@ def homepage(request):
     context = {'posts':posts,'categories':categories,}
     return render(request, 'precious/home.html', context)
 
+# Search
+def search(request):
+
+    categories = Category.objects.all()
+    posts =  Post.objects.all()
+    context = {'posts':posts,'categories':categories,}
+    return render(request, 'precious/search.html', context)
+
+# Tags
+def tags(request):
+
+    categories = Category.objects.all()
+    posts =  Post.objects.all()
+    context = {'posts':posts,'categories':categories,}
+    return render(request, 'precious/tags.html', context)
+
+
 # Create Post
 def new_post(request):
 

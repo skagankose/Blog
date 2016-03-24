@@ -1,0 +1,57 @@
+{% extends "precious/newBase.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block image %}tag.jpg{% endblock %}
+{% block title %}
+<p>
+    {% for category in categories %}
+        <a class='category-text'
+            style="text-transform: uppercase;
+        	font-size: 12px;
+        	font-weight: 800;
+        	letter-spacing: 1px;
+        	cursor:pointer;
+        	color:white;
+            text-decoration:none;
+            padding:10px;" id='{{category.text}}'>
+            {{ category.text }}
+        </a>
+    {% endfor %}
+</p>
+{% endblock %}
+
+{% block content %}
+
+</div>
+<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+{% csrf_token %}
+<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
+<input type="text" name="category-text-name" id='category-text-input' hidden='true'/>
+
+<div id='category-search-results' class="post-preview"></div>
+
+{% endblock %}
+
+{% block script %}
+
+	{% if post.is_editor %}
+	   <script>
+	   $(document).ready(function() {
+		   $('.editorMode').show();
+		   $('.offButton').hide();
+		   $('.onButton').show();
+	   })
+	   </script>
+	{% else %}
+	   <script>
+	   $(document).ready(function() {
+		   $('.editorMode').hide();
+		   $('.offButton').show();
+		   $('.onButton').hide();
+	   })
+	   </script>
+	{% endif %}
+
+{% endblock %}

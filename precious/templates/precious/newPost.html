@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Defter</title>
+    <title>Çuval</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
@@ -98,6 +98,19 @@
                 <a class="btn btn-default editorMode" href="{% url "delete_post" pk=post.pk %}" onclick="clicked(event)">  <i class="fa fa-trash-o"></i>  </a>
                 </p>
 
+
+                <!-- <div class="row">
+                <div class="col-md-7">
+                <div class="list-group">
+                {% for item in all_items %}
+                	{% if item.heading %}
+                	   <a class="list-group-item" href="#heading-{{item.pk}}"> {{ item.text }} </a>
+                	{% endif %}
+                {% endfor %}
+                </div>
+                </div>
+                </div> -->
+
                 {% for item in all_items %}
 
                 {% if item.paragraph %}
@@ -136,7 +149,7 @@
                     <div>
                     {% endif %}
 
-                    <h2 class="section-heading">{{ item.text }}</h2>
+                    <h2 class="section-heading"><a name="heading-{{item.pk}}"></a>{{ item.text }}</h2>
 
                     </div>
 
@@ -298,9 +311,10 @@
                     {% endif %}
 
                     <a href="#"> <img class="img-responsive" src="/static/{{ item.file_item }}" alt=""> </a></p>
-                    <span class="caption text-muted">
+
+                    <!-- <span class="caption text-muted">
                         Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                    </span>
+                    </span> -->
 
                     </div>
 
@@ -390,10 +404,6 @@
                     <a class="text-type-adjuster btn btn-default" id='list_item'><i class="fa fa-list-alt"></i></a>
                     <a class="text-type-adjuster btn btn-default" id='link'><i class="fa fa-link"></i></a>
                     <a class="btn btn-danger text-type-adjuster btn-xs" id='is_safe'> <i class="fa fa-file-o"></i> </a>
-                </p>
-
-                <p class="editorMode">
-
                 	<a class="file-type-adjuster btn btn-default" id='image'><i class="fa fa-file-image-o"></i></a>
                 	<a class="file-type-adjuster btn btn-default" id='video'><i class="fa fa-file-video-o"></i></a>
                 	<a class="file-type-adjuster btn btn-default" id='other'><i class="fa fa-paperclip"></i></a>
@@ -427,16 +437,52 @@
         </div>
     </article>
 
-
-    <!-- Footer -->
-    <footer style="padding-bottom:30px;">
-        <hr>
+    <!-- <footer>
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <p class="copyright text-muted">
-                        Built for himself by <a target="_blank" href="https://www.twitter.com/skagankose">Suha</a>,
+                        Built for himself by <a target="_blank" href="https://www.twitter.com/skagankose">Suha Kagan Kose</a>,
                         Copyright &copy; 2016
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer> -->
+
+    <hr>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://twitter.com/skagankose">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/s%C3%BCha-ka%C4%9Fan-k%C3%B6se-9b8289111">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/skagankose">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">&copy; Simple Blog 2016</p>
                 </div>
             </div>
         </div>

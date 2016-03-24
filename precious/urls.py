@@ -8,6 +8,12 @@ urlpatterns = [
     # Homepage
     url(r'^$', views.homepage, name='homepage'),
 
+    # Search
+    url(r'^search/$', views.search, name='search'),
+
+    # Tags
+    url(r'^tags/$', views.tags, name='tags'),
+
     # Create Post
     url(r'^new_post/$', views.new_post, name='new_post'),
 

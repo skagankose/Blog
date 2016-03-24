@@ -1,4 +1,4 @@
-h2, p, button, form, input, blockquote, .caption, h3, h4, li, form, .btn, .home_element, .home_element_2 {
+h2, p, button, form, input, blockquote, .caption, h3, h4, li, form, .btn {
 	font-family: PT Mono;
 }
 
@@ -30,13 +30,24 @@ video {
 }
 
 .home_element {
+	font-family: PT Mono;
 	font-size: 15px;
 }
 
 .home_element_2 {
+	font-family: PT Mono;
 	font-size: 13px;
 }
 
 .home_link {
 	text-decoration: none;
+}
+
+#tag {
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 1px
+	cursor:pointer;
+	color:white;
 }
