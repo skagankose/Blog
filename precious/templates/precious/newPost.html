@@ -56,10 +56,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
 
-
+                    <li><a href="#top" class="button"><i class="fa fa-arrow-up"></i></a></li>
+                    <li><a href="#bottom" class="button"><i class="fa fa-arrow-down"></i></a></li>
                     <li><a class="offButton"href="{% url "editor_on" pk=post.pk %}"><i class="fa fa-toggle-off"></i></a></li>
                     <li><a class="onButton" href="{% url "editor_off" pk=post.pk %}"><i class="fa fa-toggle-on"></i></a></li>
-                    <li><a href="#bottom" class="button"> Bottom </a></li>
                     <li><a href="{% url "search" %}" class="button"> Search </a></li>
                     <li><a href="{% url "tags" %}" class="button"> Tags </a></li>
                     <li><a class="customized" href="{% url "new_post" %}" class="button"> New Entry </a></li>
@@ -72,6 +72,7 @@
         </div>
         <!-- /.container -->
     </nav>
+    <div><a name="top"></a><div>
 
     <!-- Page Header -->
     {% if post.thumbnail %}
@@ -108,7 +109,7 @@
     <article>
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-10 col-md-offset-1">
 
                 <p>
                 <a class="btn btn-default editorMode" href="{% url "edit_post" pk=post.pk %}"> <i class="fa fa-pencil"></i> </a>
@@ -306,7 +307,7 @@
                     <div>
                     {% endif %}
 
-                    <p><a href="{{ item.text }}" target="_blank">{{ item.text }}</a></p>
+                    <p><a style="text-decoration:none;hower:color:#337ab7;" href="{{ item.text }}" target="_blank">{{ item.text|cut_link }}</a></p>
 
                     </div>
 
@@ -328,11 +329,15 @@
                     <div>
                     {% endif %}
 
+                    <!-- <div class="row">
+                        <div class="col-md-6"> -->
                     <a href="/static/{{ item.file_item }}"> <img class="img-responsive" src="/static/{{ item.file_item }}" alt=""> </a></p>
-
                     <!-- <span class="caption text-muted">
                         Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                    </span> -->
+                    </span>
+                        </div>
+                    </div> -->
+
 
                     </div>
 
@@ -354,7 +359,7 @@
                     <div>
                     {% endif %}
 
-                    <p><a href="/static/{{ item.file_item }}"> {{ item.file_item }} </a></p>
+                    <p><a style="text-decoration:none;hower:color:#337ab7;" href="/static/{{ item.file_item }}"> {{ item.file_item|cut_doc }} </a></p>
 
                     </div>
 
@@ -424,7 +429,9 @@
                     <a class="text-type-adjuster btn btn-default" id='list_item'><i class="fa fa-list-alt"></i></a>
                     <a class="text-type-adjuster btn btn-default" id='link'><i class="fa fa-link"></i></a>
                     <a class="btn btn-danger text-type-adjuster btn-xs" id='is_safe'> <i class="fa fa-file-o"></i> </a>
-                	<a class="file-type-adjuster btn btn-default" id='image'><i class="fa fa-file-image-o"></i></a>
+                </p>
+                <p class="editorMode">
+                    <a class="file-type-adjuster btn btn-default" id='image'><i class="fa fa-file-image-o"></i></a>
                 	<a class="file-type-adjuster btn btn-default" id='video'><i class="fa fa-file-video-o"></i></a>
                 	<a class="file-type-adjuster btn btn-default" id='other'><i class="fa fa-paperclip"></i></a>
                 </p>
@@ -489,7 +496,7 @@
                             </a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted">&copy; Simple Blog 2016</p>
+                    <p class="copyright text-muted">&copy; Seyahatname 2016</p>
                 </div>
             </div>
         </div>
@@ -499,6 +506,12 @@
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/clean-blog.min.js" %}"></script>
     <script src="{% static "js/newPost.js" %}"></script>
+
+    <script type="text/javascript">
+        function clicked() {
+            return confirm('Really Wanna Delete?');
+        }
+    </script>
 
 
    {% if post.is_editor %}

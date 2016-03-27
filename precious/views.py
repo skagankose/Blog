@@ -18,6 +18,15 @@ def cut_date(date):
 	# return splitted[0][2:5] + splitted[1] + splitted[2]
 	return str(date.strftime('%B')) + " " + str(date.day) + ",  " + str(date.year)
 
+@register.filter
+def cut_doc(doc):
+	return str(doc).split("/")[1]
+
+@register.filter
+def cut_link(cut_link):
+	items = str(cut_link).split("//")[1].split(".")
+	return items[1] + "." + items[2]
+
 # Homepage
 def homepage(request):
 
