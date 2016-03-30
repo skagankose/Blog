@@ -10,8 +10,9 @@
         {{ post.description }}
         </h3>
     </a>
-    <p class="post-meta" style="font-size:17px;"><i class="fa fa-calendar"></i>
-        {{ post.created_date|cut_date }}
+    <p class="post-meta" style="font-size:17px;">
+        <i class="fa fa-calendar"></i>{{ post.created_date|cut_date }}
+        <i class="fa fa-tags"></i> {{ post|cut_category }}
     </p>
     <hr>
     <!-- <a type="button" class="list-group-item customized11 home_element_2" href='{% url "newPost" pk=post.pk %}'> {{ post.title }} </a> -->

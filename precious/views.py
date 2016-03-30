@@ -12,6 +12,14 @@ from django.utils import timezone
 from .forms import PostForm, GeneralTextForm, GeneralFileForm, CategoryForm, EditGeneralTextForm, EditGeneralFileForm, EditPostForm
 from .models import Post, GeneralText, GeneralFile, Category
 
+
+@register.filter
+def cut_category(post):
+	returnString = str()
+	for category in post.category.all():
+		returnString +=  str(category) + " "
+	return returnString
+
 @register.filter
 def cut_date(date):
 	# splitted = str(date).split()[0].split("-")
@@ -24,8 +32,11 @@ def cut_doc(doc):
 
 @register.filter
 def cut_link(cut_link):
+	returnString = str()
 	items = str(cut_link).split("//")[1].split(".")
-	return items[1] + "." + items[2]
+	for i in range(len(items)):
+		returnString = returnString + "." + items[i]
+	return returnString[1:]
 
 # Homepage
 def homepage(request):
