@@ -11,6 +11,7 @@ from django.utils import timezone
 # Ours'
 from .forms import PostForm, GeneralTextForm, GeneralFileForm, CategoryForm, EditGeneralTextForm, EditGeneralFileForm, EditPostForm
 from .models import Post, GeneralText, GeneralFile, Category
+import random
 
 
 @register.filter
@@ -31,6 +32,14 @@ def cut_doc(doc):
 	return str(doc).split("/")[1]
 
 @register.filter
+def cut_img(img):
+	img = str(img).split("/")
+	if len(img) > 1:
+		return img[1]
+	else:
+		return False
+
+@register.filter
 def cut_link(cut_link):
 	returnString = str()
 	items = str(cut_link).split("//")[1].split(".")
@@ -41,10 +50,12 @@ def cut_link(cut_link):
 # Homepage
 def homepage(request):
 
-    categories = Category.objects.all()
-    posts =  Post.objects.all()
-    context = {'posts':posts,'categories':categories,}
-    return render(request, 'precious/home.html', context)
+	categories = Category.objects.all()
+	posts =  Post.objects.all()
+	randNumber = (int(random.random() * len(posts))) + 1
+	context = {'posts':posts,'categories':categories,'randNumber':randNumber}
+
+	return render(request, 'precious/home.html', context)
 
 # Search
 def search(request):

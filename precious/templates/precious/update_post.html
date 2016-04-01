@@ -2,7 +2,11 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block image %}edit.jpg{% endblock %}
+
+{% block image %}
+<header class="intro-header" style="background-image: url('/static/img/edit.jpg');">
+{% endblock %}
+
 {% block header %}{% endblock %}
 
 {% block content %}

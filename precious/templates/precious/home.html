@@ -2,7 +2,20 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block image %}home.jpg{% endblock %}
+{% block image %}
+    {% for post in posts %}
+        {% if forloop.counter == randNumber %}
+            {% if post.thumbnail|cut_img %}
+            <header class="intro-header" style="background-image: url('/static/img/{{ post.thumbnail|cut_img }}');">
+            {% else %}
+            <header class="intro-header" style="background-image: url('/static/img/home.jpg');">
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+
+
 {% block title %}
     <h1>Seyahatname</h1>
     <hr class="small">
@@ -13,6 +26,8 @@
 {% endblock %}
 
 {% block content %}
+
+
 
 </div>
 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">

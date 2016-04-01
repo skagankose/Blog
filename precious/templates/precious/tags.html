@@ -2,7 +2,11 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block image %}tag.jpg{% endblock %}
+
+{% block image %}
+<header class="intro-header" style="background-image: url('/static/img/tag.jpg');">
+{% endblock %}
+
 {% block title %}
 <p>
     <i class="fa fa-tags"></i>

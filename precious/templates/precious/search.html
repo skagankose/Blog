@@ -2,7 +2,10 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block image %}search.jpg{% endblock %}
+{% block image %}
+<header class="intro-header" style="background-image: url('/static/img/search.jpg');">
+{% endblock %}
+
 {% block title %}
 <h2 class="subheading">
     {% csrf_token %}

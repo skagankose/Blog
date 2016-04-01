@@ -32,6 +32,13 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+        .navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+        background-color: rgba(0,0,0,0.5);
+        color:white;
+        }
+    </style>
+
     {% block head %} {% endblock %}
 
 </head>
@@ -56,15 +63,37 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
 
+
                     <li><a href="#top" class="button"><i class="fa fa-arrow-up"></i></a></li>
                     <li><a href="#bottom" class="button"><i class="fa fa-arrow-down"></i></a></li>
                     <li><a class="offButton"href="{% url "editor_on" pk=post.pk %}"><i class="fa fa-toggle-off"></i></a></li>
                     <li><a class="onButton" href="{% url "editor_off" pk=post.pk %}"><i class="fa fa-toggle-on"></i></a></li>
-                    <li><a href="{% url "search" %}" class="button"> Search </a></li>
+                    <!-- <li><a href="{% url "search" %}" class="button"> Search </a></li>
                     <li><a href="{% url "tags" %}" class="button"> Tags </a></li>
                     <li><a class="customized" href="{% url "new_post" %}" class="button"> New Entry </a></li>
-                    <li><a class="customized" href="{% url "new_category" %}" class="button"> New Category </a></li>
+                    <li><a class="customized" href="{% url "new_category" %}" class="button"> New Category </a></li> -->
+                    <li class="dropdown" style="cursor:pointer;">
+                          <a  class="dropdown-toggle" type="button" data-toggle="dropdown">Index <i class="fa fa-caret-down"></i></a>
+                          <ul class="dropdown-menu" style="color:white;background-color:rgba(0,0,0, 0.5);">
 
+
+                        {% for item in all_items %}
+                        	{% if item.heading %}
+                            <li><a  onmouseover='this.style.color="black"'
+                                    onmouseout='this.style.color="white"'
+                                    style="color:white;font-family:PT Mono;font-size:20px;text-decoration:none;font-weight:500;"
+                                    href="#heading-{{item.pk}}">{{ item.text }}</a></li>
+
+                            {% elif item.subheading %}
+                            <li><a
+                                    onmouseover='this.style.color="black"'
+                                    onmouseout='this.style.color="white"'
+                                    style="color:white;font-family:PT Mono;font-size:17px;text-decoration:none;font-weight:500;"
+                                    href="#subheading-{{item.pk}}">&nbsp;&nbsp;&nbsp;{{ item.text }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    </li>
 
                 </ul>
             </div>
@@ -117,16 +146,25 @@
                 <a class="btn btn-default editorMode" href="{% url "delete_post" pk=post.pk %}" onclick="clicked(event)">  <i class="fa fa-trash-o"></i>  </a>
                 </p>
 
-                <!-- <div class="row">
-                <div class="col-md-7">
-                <div class="list-group">
+                <!-- <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Index
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+
+
                 {% for item in all_items %}
                 	{% if item.heading %}
-                	   <a class="list-group-item" href="#heading-{{item.pk}}"> {{ item.text }} </a>
-                	{% endif %}
+                    <li><a
+                            style="font-family:PT Mono;font-size:25px;text-decoration:none;font-weight:500;"
+                            href="#heading-{{item.pk}}">{{ item.text }}</a></li>
+
+                    {% elif item.subheading %}
+                            <li><a
+                            style="font-family:PT Mono;font-size:20px;text-decoration:none;font-weight:500;"
+                            href="#subheading-{{item.pk}}">&nbsp;&nbsp;&nbsp;{{ item.text }}</a></li>
+                    {% endif %}
                 {% endfor %}
-                </div>
-                </div>
+                </ul>
                 </div> -->
 
                 {% for item in all_items %}
@@ -235,7 +273,7 @@
                     <div>
                     {% endif %}
 
-                    <p><h3 class="secondHeading">{{ item.text }}</h3></p>
+                    <p><h3 class="secondHeading"><a name="subheading-{{item.pk}}"></a>{{ item.text }}</h3></p>
 
                     </div>
 
@@ -478,7 +516,7 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <ul class="list-inline text-center">
                         <li>
-                            <a href="https://twitter.com/skagankose">
+                            <a href="https://twitter.com/skagankose" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -486,7 +524,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.linkedin.com/in/s%C3%BCha-ka%C4%9Fan-k%C3%B6se-9b8289111">
+                            <a href="https://www.linkedin.com/in/s%C3%BCha-ka%C4%9Fan-k%C3%B6se-9b8289111" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -494,7 +532,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://github.com/skagankose">
+                            <a href="https://github.com/skagankose" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>

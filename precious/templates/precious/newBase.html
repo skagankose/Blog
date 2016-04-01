@@ -68,8 +68,13 @@
         <!-- /.container -->
     </nav>
 
-    <header class="intro-header" style="background-image: url('/static/img/{% block image %}{% endblock %}');">
-    	<div class="container">
+
+    {% block image %}
+
+
+    {% endblock %}
+
+        <div class="container">
     		<div class="row">
     			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
     				<div class="site-heading">
@@ -79,6 +84,8 @@
     		</div>
     	</div>
     </header>
+
+
 
     <article>
     	<div class="container">
@@ -100,7 +107,7 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <ul class="list-inline text-center">
                         <li>
-                            <a href="https://twitter.com/skagankose">
+                            <a href="https://twitter.com/skagankose" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -108,7 +115,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.linkedin.com/in/s%C3%BCha-ka%C4%9Fan-k%C3%B6se-9b8289111">
+                            <a href="https://www.linkedin.com/in/s%C3%BCha-ka%C4%9Fan-k%C3%B6se-9b8289111" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -116,7 +123,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://github.com/skagankose">
+                            <a href="https://github.com/skagankose" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>
