@@ -424,13 +424,21 @@
                     {% endif %}
 
                     <p>
-                    <video controls  poster="/static/img/videoDefault.jpg">
+                    <video controls  poster="/static/img/videoDefault.jpg" id="{{ item.pk }}-video">
                 		<source src="/static/{{ item.file_item }}" type="video/mp4">
                 		<source "/static/{{ item.file_item }}" type="video/ogg">
                 	</video>
                     </p>
 
                     </div>
+
+                    <!-- Set Default Playback Rate to x2 for Class-->
+                    {% if "Class" in post|cut_category %}
+                        <script>
+                            var vid = document.getElementById('{{ item.pk }}-video');
+                            vid.defaultPlaybackRate = 2.0;
+                        </script>
+                    {% endif %}
 
                 {% elif item.is_safe %}
 
@@ -552,6 +560,7 @@
     <script src="{% static "js/newPost.js" %}"></script>
 
     <script type="text/javascript">
+        document.getElementByClass("videoItem").playbackRate = 3.0;
         function clicked() {
             return confirm('Really Wanna Delete?');
         }
@@ -575,6 +584,7 @@
        })
        </script>
    {% endif %}
+
 
    </body>
 
