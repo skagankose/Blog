@@ -1,3 +1,3 @@
-#Seyahatname
+# seyahatname
 
-Seyahatname means itinerary in Turkish. This project is just me trying to create a personal blog.
+Seyahatname means itinerary and this project is just me trying to create a personal blog.
