@@ -5,7 +5,7 @@
 *.jpg
 *.jpeg
 *.png
-.DS_STORE
+*.DS_STORE
 .com.apple.timemachine.donotpresent
 ~/Documents/Projects/seyahatname/precious/migrations
 ~/Documents/Projects/seyahatname/precious/__pycache__                 
