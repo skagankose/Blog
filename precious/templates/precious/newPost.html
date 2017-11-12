@@ -65,34 +65,46 @@
                 <ul class="nav navbar-nav navbar-right">
 
 
+                    <!-- <li><a href="{% url "new_post" %}" class="button"><i class="fa fa-plus"></i></a></li> -->
                     <li><a href="#top" class="button"><i class="fa fa-arrow-up"></i></a></li>
                     <li><a href="#bottom" class="button"><i class="fa fa-arrow-down"></i></a></li>
+                    <li><a class="externalOffButton"href="{% url "external_on" pk=post.pk %}"><i class="fa fa-link"></i></a></li>
+                    <li><a class="externalOnButton" href="{% url "external_off" pk=post.pk %}"><i class="fa fa-chain-broken"></i></a></li>
                     <li><a class="offButton"href="{% url "editor_on" pk=post.pk %}"><i class="fa fa-toggle-off"></i></a></li>
                     <li><a class="onButton" href="{% url "editor_off" pk=post.pk %}"><i class="fa fa-toggle-on"></i></a></li>
+
                     <!-- <li><a href="{% url "search" %}" class="button"> Search </a></li>
                     <li><a href="{% url "tags" %}" class="button"> Tags </a></li>
                     <li><a class="customized" href="{% url "new_post" %}" class="button"> New Entry </a></li>
                     <li><a class="customized" href="{% url "new_category" %}" class="button"> New Category </a></li> -->
+
                     <li class="dropdown" style="cursor:pointer;">
                           <a  class="dropdown-toggle" type="button" data-toggle="dropdown">Index <i class="fa fa-caret-down"></i></a>
                           <ul class="dropdown-menu" style="color:white;background-color:rgba(0,0,0, 0.5);">
-
 
                         {% for item in all_items %}
                         	{% if item.heading %}
                             <li><a
                                     onmouseover='this.style.color="black"'
                                     onmouseout='this.style.color="white"'
-                                    style="color:white;font-family:PT Mono;font-size:15px;text-decoration:none;font-weight:500;"
+                                    style="color:white;font-family:Verdana;font-size:17px;text-decoration:none;font-weight:500;"
                                     href="#heading-{{item.pk}}">{{ item.text }}</a></li>
 
                             {% elif item.subheading %}
                             <li><a  class="indexSubheading"
                                         onmouseover='this.style.color="black"'
                                         onmouseout='this.style.color="white"'
-                                        style="color:white;font-family:PT Mono;font-size:13px;text-decoration:none;font-weight:500;"
+                                        style="color:white;font-family:Verdana;font-size:15px;text-decoration:none;font-weight:500;"
                                         href="#subheading-{{item.pk}}">&nbsp;&nbsp;&nbsp;{{ item.text }}</a></li>
 
+                            {% elif item.is_index %}
+                            <li><a  class="indexSubheading"
+                                        onmouseover='this.style.color="black"'
+                                        onmouseout='this.style.color="white"'
+                                        style="color:white;font-family:Verdana;font-size:17px;text-decoration:none;font-weight:500;"
+                                        href="/newPost/{{item.text|safe}}"><i class="fa fa-sign-out"></i>{{item.text|cut_pk}} </a>
+                            </li>
+                                        <!-- " -->
                             {% endif %}
                         {% endfor %}
                         </ul>
@@ -114,19 +126,19 @@
     {% endif %}
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
                     <div class="post-heading" >
                         <h1>
                             {{ post.title }}
                         </h1>
                         <h2 class="subheading"
-                            style="font-family:PT Mono;
+                            style="font-family: Verdana;
                                    font-weight:normal;
                                    font-size:23px;">
                             {{ post.description }}
                         </h2>
                         <span class="post-meta"
-                              style="font-family: PT Mono;
+                              style="font-family: Verdana;
                                      color:rgba(255, 255, 255, 0.50)">
                                      <i class="fa fa-calendar-plus-o"></i> {{ post.updated_date|cut_date}}
                                      <i class="fa fa-tags"></i> {{ post|cut_category }}
@@ -158,22 +170,27 @@
                 {% for item in all_items %}
                 	{% if item.heading %}
                     <li><a
-                            style="font-family:PT Mono;font-size:25px;text-decoration:none;font-weight:500;"
+                            style="font-family:Verdana;font-size:25px;text-decoration:none;font-weight:500;"
                             href="#heading-{{item.pk}}">{{ item.text }}</a></li>
 
                     {% elif item.subheading %}
                             <li><a
-                            style="font-family:PT Mono;font-size:20px;text-decoration:none;font-weight:500;"
+                            style="font-family:Verdana;font-size:20px;text-decoration:none;font-weight:500;"
                             href="#subheading-{{item.pk}}">&nbsp;&nbsp;&nbsp;{{ item.text }}</a></li>
                     {% endif %}
                 {% endfor %}
                 </ul>
                 </div> -->
 
+                {% if post.is_external %}
+                    <h2> Externals </h2>
+                {% endif %}
+
                 {% for item in all_items %}
 
                 {% if item.paragraph %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -193,9 +210,11 @@
                     <p>{{ item.text }}</p>
 
                     </div>
+                    {% endif %}
 
                 {% elif item.heading %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
@@ -211,10 +230,12 @@
                     <p><h2 class="section-heading"><a name="heading-{{item.pk}}"></a>{{ item.text }}</h2></p>
 
                     </div>
+                    {% endif %}
 
 
                 {% elif item.inline_block %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -234,9 +255,11 @@
                     <p><blockquote style='font-style:normal;'>{{ item.text }}</blockquote></p>
 
                     </div>
+                    {% endif %}
 
                 {% elif item.code %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -256,9 +279,11 @@
                     <p><pre><code>{{ item.text }}</code></pre></p>
 
                     </div>
+                    {% endif %}
 
                 {% elif item.subheading %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -279,10 +304,12 @@
                     <p><h3 class="secondHeading"><a name="subheading-{{item.pk}}"></a>{{ item.text }}</h3></p>
 
                     </div>
+                    {% endif %}
 
 
                 {% elif item.subsubheading %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -307,10 +334,12 @@
                     <p><h4 class="thirdHeading">{{ item.text }}</h4></p>
 
                     </div>
+                    {% endif %}
 
 
                 {% elif item.list_item %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -334,9 +363,11 @@
                     </p>
 
                     </div>
+                    {% endif %}
 
                 {% elif item.link %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -352,12 +383,14 @@
                     <div>
                     {% endif %}
 
-                    <p><a style="text-decoration:none;hower:color:#337ab7;" href="{{ item.text }}" target="_blank">{{ item.text|cut_link }}</a></p>
+                    <p><a style="text-decoration:none;hower:color:#337ab7;" href="{{ item.text }}" target="_blank">{{ item.text|linkText }}</a></p>
 
                     </div>
+                    {% endif %}
 
                 {% elif item.image %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -385,9 +418,11 @@
 
 
                     </div>
+                    {% endif %}
 
                 {% elif item.other %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -407,9 +442,11 @@
                     <p><a style="text-decoration:none;hower:color:#337ab7;" href="/static/{{ item.file_item }}"> {{ item.file_item|cut_doc }} </a></p>
 
                     </div>
+                    {% endif %}
 
                 {% elif item.video %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -427,7 +464,7 @@
                     {% endif %}
 
                     <p>
-                    <video controls  poster="/static/img/videoDefault.jpg" id="{{ item.pk }}-video">
+                    <video controls   style="background-color:black;" poster="/static/img/videoDefault.jpg" id="{{ item.pk }}-video">
                 		<source src="/static/{{ item.file_item }}" type="video/mp4">
                 		<source "/static/{{ item.file_item }}" type="video/ogg">
                 	</video>
@@ -442,9 +479,11 @@
                             vid.defaultPlaybackRate = 2.0;
                         </script>
                     {% endif %}
+                    {% endif %}
 
                 {% elif item.is_safe %}
 
+                    {% if not post.is_external %}
                     {% if post.is_editor %}
                     <div class="jumbotron">
                     <p>
@@ -464,6 +503,22 @@
                     {{ item.text|safe }}
 
                     </div>
+                    {% endif %}
+
+                {% elif item.is_index %}
+
+                    {% if post.is_external %}
+
+
+                    <p style="font-size:17px;">
+                        <a class="btn btn-default btn-xs disabled"><i class="fa fa-sign-out"></i></a>
+                        <a class="btn btn-default btn-xs disable" style="text-decoration:none;" href="/newPost/{{ item.text|safe }}">{{ item.text|cut_pk }}</a>
+                        &nbsp;&nbsp;&nbsp;
+            			<a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+            			<a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+
+                    {% endif %}
 
                 {% endif %}
 
@@ -484,6 +539,7 @@
                     <a class="text-type-adjuster btn btn-default" id='list_item'><i class="fa fa-list-alt"></i></a>
                     <a class="text-type-adjuster btn btn-default" id='link'><i class="fa fa-link"></i></a>
                     <a class="btn btn-danger text-type-adjuster btn-xs" id='is_safe'> <i class="fa fa-file-o"></i> </a>
+                    <a class="btn btn-warning text-type-adjuster btn-xs" id='is_index'> <i class="fa fa-map-signs"></i> </a>
                 </p>
                 <p class="editorMode">
                     <a class="file-type-adjuster btn btn-default" id='image'><i class="fa fa-file-image-o"></i></a>
@@ -573,13 +629,31 @@
            $('.offButton').hide();
            $('.onButton').show();
        })
-       </script>
+
    {% else %}
        <script>
        $(document).ready(function() {
            $('.editorMode').hide();
            $('.offButton').show();
            $('.onButton').hide();
+       })
+
+   {% endif %}
+
+   {% if post.is_external %}
+
+       $(document).ready(function() {
+           $('.externalMode').show();
+           $('.externalOffButton').hide();
+           $('.externalOnButton').show();
+       })
+       </script>
+   {% else %}
+
+       $(document).ready(function() {
+           $('.externalMode').hide();
+           $('.externalOffButton').show();
+           $('.externalOnButton').hide();
        })
        </script>
    {% endif %}

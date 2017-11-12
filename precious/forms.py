@@ -12,7 +12,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('thumbnail', 'title', 'description', 'category',)
+        fields = ('thumbnail', 'title', 'description', 'category')
 
 # Create GeneralText
 class GeneralTextForm(forms.ModelForm):

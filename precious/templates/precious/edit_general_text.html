@@ -11,7 +11,7 @@
 
 {% block content %}
 
-        <form id="form" method="post" action="{% url "edit_general_text" pk=post.pk pks=general_text.pk %}" enctype="multipart/form-data">{% csrf_token %}
+        <form id="form" method="post" action="{% url "edit_general_text" pk=post.pk pks=general_text.pk %}" enctype="multipart/form-data" style="color:white;">{% csrf_token %}
             {{ form|crispy }}
         <input class="btn btn-default" type="submit" name="submit" value="Submit" />
         <a class="btn btn-default" onclick="goBack()">Cancel</a>

@@ -1,9 +1,9 @@
 h1, h2, p, button, form, input, blockquote, .caption, h3, h4, li, form, .btn {
-	font-family: PT Mono;
+	font-family: Verdana;
 }
 
 pre {
-	font-family: PT Mono;
+	font-family: Verdana;
 	background-color: black;
 	font-size: 15px;
     color: #00FF00;
@@ -31,12 +31,12 @@ video {
 }
 
 .home_element {
-	font-family: PT Mono;
+	font-family: Verdana;
 	font-size: 15px;
 }
 
 .home_element_2 {
-	font-family: PT Mono;
+	font-family: Verdana;
 	font-size: 13px;
 }
 

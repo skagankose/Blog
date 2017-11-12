@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.defaulttags import register
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Combine query sets
 from itertools import chain
@@ -13,7 +14,31 @@ from .forms import PostForm, GeneralTextForm, GeneralFileForm, CategoryForm, Edi
 from .models import Post, GeneralText, GeneralFile, Category
 import random
 
+@register.filter
+def linkText(text):
+	return text.split("www.")[1]
 
+@register.filter
+def First(text):
+	return text[0]
+
+@register.filter
+def Rest(text):
+	return text[1:]
+
+@register.filter
+def cut_pk(pk):
+	try:
+		int_pk = pk
+		p = get_object_or_404(Post, pk=int_pk)
+		title = p.title.split(":")
+		return str(" " + title[1])
+	except:
+		try:
+			p = get_object_or_404(Post, pk=int_pk)
+			return p.title
+		except:
+			return pk
 @register.filter
 def cut_category(post):
 	returnString = str()
@@ -39,19 +64,24 @@ def cut_img(img):
 	else:
 		return False
 
-@register.filter
-def cut_link(cut_link):
-	returnString = str()
-	items = str(cut_link).split("//")[1].split(".")
-	for i in range(len(items)):
-		returnString = returnString + "." + items[i]
-	return returnString[1:]
-
 # Homepage
 def homepage(request):
 
 	categories = Category.objects.all()
 	posts =  Post.objects.all()
+
+	paginator = Paginator(posts, 5)
+
+	page = request.GET.get('page')
+	try:
+	    posts = paginator.page(page)
+	except PageNotAnInteger:
+	    # If page is not an integer, deliver first page.
+	    posts = paginator.page(1)
+	except EmptyPage:
+	    # If page is out of range (e.g. 9999), deliver last page of results.
+	    posts = paginator.page(paginator.num_pages)
+
 	randNumber = (int(random.random() * len(posts))) + 1
 	context = {'posts':posts,'categories':categories,'randNumber':randNumber}
 
@@ -144,6 +174,8 @@ def new_general_text(request, pk):
                 general_text.youtube = True
             elif item_type == 'is_safe':
                 general_text.is_safe = True
+            elif item_type == 'is_index':
+                general_text.is_index = True
 
             general_text.position = post.item_position
             general_text.save()
@@ -313,6 +345,18 @@ def editor_on(request, pk):
 def editor_off(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.is_editor = False
+    post.save()
+    return HttpResponseRedirect('/newPost/' + str(pk) + '/')
+
+def external_on(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.is_external = True
+    post.save()
+    return HttpResponseRedirect('/newPost/' + str(pk) + '/')
+
+def external_off(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.is_external = False
     post.save()
     return HttpResponseRedirect('/newPost/' + str(pk) + '/')
 

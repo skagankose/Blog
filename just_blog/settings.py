@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 
     # Third party applications
     'crispy_forms',
+    'endless_pagination',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,14 +79,21 @@ WSGI_APPLICATION = 'just_blog.wsgi.application'
 
 
 # Settings for Postgresql database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'just_blog_db',
+#         'USER': 'ruler',
+#         'PASSWORD': '123',
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'just_blog_db',
-        'USER': 'ruler',
-        'PASSWORD': '123',
-        'HOST': '',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

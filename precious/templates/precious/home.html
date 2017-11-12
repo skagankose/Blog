@@ -2,6 +2,10 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
+{% block background %}
+<body>
+{% endblock %}
+
 {% block image %}
     {% for post in posts %}
         {% if forloop.counter == randNumber %}
@@ -19,20 +23,21 @@
 {% block title %}
     <h1>Seyahatname</h1>
     <hr class="small">
-    <span class="subheading" style="font-family:pt mono;">
+    <span class="subheading">
         İsim, edebiyat (seyahatna:me).<br/>
-        Bir yazarın gezip gördüğü yerlerden edindiği bilgi ve izlenimlerini anlattığı eser
+        Bir yazarın gezip gördüğü yerlerden edindiği bilgi ve izlenimlerini anlattığı eser.
     </span>
 {% endblock %}
 
 {% block content %}
 
 
-
 </div>
 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
+
 {% for post in posts %}
+
 <div class="post-preview">
     <a href="{% url "newPost" pk=post.pk %}">
         <h2 class="post-title" style="font-size:30px;">
@@ -51,12 +56,40 @@
 
 {% endfor %}
 
-<ul class="pager">
-    <li class="next">
-        <a href="#" >Older Posts &rarr;</a>
-    </li>
-</ul>
+<div class="pagination" >
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a class="btn btn-default" href="?page={{ posts.previous_page_number }}" >
+        {% else %}
+            <a class="btn btn-default disabled">
+        {% endif %}
+                <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Newer Posts
+            </a>
 
+        <span class="current">
+            <a class="btn btn-deafult disabled">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                {{ posts.number }} out of {{ posts.paginator.num_pages }}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+        </span>
+
+
+        {% if posts.has_next %}
+            <a class="btn btn-default" href="?page={{ posts.next_page_number }}" >
+        {% else %}
+            <a class="btn btn-default disabled">
+        {% endif %}
+                Older Posts <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </a>
+
+    </span>
+</div>
+
+{% endblock %}
+
+{% block break %}
+<hr/>
 {% endblock %}
 
 {% block script %}

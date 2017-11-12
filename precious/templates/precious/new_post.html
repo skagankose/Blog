@@ -10,11 +10,13 @@
 
 {% block content %}
 
-			<form id="form" method="post" action="/new_post/" enctype="multipart/form-data">
+			<form id="form" method="post" action="/new_post/" enctype="multipart/form-data" style="color:white;">
 				{% csrf_token %}
 				{{ form|crispy }}
 				<input class="btn btn-default" type="submit" name="submit" value="Submit" />
-				<a class="btn btn-default" onclick="goBack()">Cancel</a>
+				<!-- <a class="btn btn-danger" onclick="goBack()">Cancel</a> -->
 			</form>
 
 {% endblock %}
+
+{% block hr %}{% endblock %}
