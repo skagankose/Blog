@@ -1,0 +1,23 @@
+{% extends "precious/newBase.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+
+{% block image %}
+<header class="intro-header" style="background-image: url('/static/img/edit.jpg');">
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+    <p>
+        <form id="form" method="post" action="{% url "edit_post" pk=post.pk %}" enctype="multipart/form-data" style="color:white;">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-default" type="submit" name="submit" value="Submit" />
+        </form>
+
+    </p>
+
+{% endblock %}

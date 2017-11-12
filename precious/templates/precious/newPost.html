@@ -1,0 +1,666 @@
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png"/>
+
+    <title>Seyahatname</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static "css/clean-blog.min.css" %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "css/first.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "css/second.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "css/newCustom.css" %}"  rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+        background-color: rgba(0,0,0,0.5);
+        color:white;
+        }
+    </style>
+
+    {% block head %} {% endblock %}
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><i class="fa fa-home fa-2x"></i></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+
+                    <!-- <li><a href="{% url "new_post" %}" class="button"><i class="fa fa-plus"></i></a></li> -->
+                    <li><a href="#top" class="button"><i class="fa fa-arrow-up"></i></a></li>
+                    <li><a href="#bottom" class="button"><i class="fa fa-arrow-down"></i></a></li>
+                    <li><a class="externalOffButton"href="{% url "external_on" pk=post.pk %}"><i class="fa fa-link"></i></a></li>
+                    <li><a class="externalOnButton" href="{% url "external_off" pk=post.pk %}"><i class="fa fa-chain-broken"></i></a></li>
+                    <li><a class="offButton"href="{% url "editor_on" pk=post.pk %}"><i class="fa fa-toggle-off"></i></a></li>
+                    <li><a class="onButton" href="{% url "editor_off" pk=post.pk %}"><i class="fa fa-toggle-on"></i></a></li>
+
+                    <!-- <li><a href="{% url "search" %}" class="button"> Search </a></li>
+                    <li><a href="{% url "tags" %}" class="button"> Tags </a></li>
+                    <li><a class="customized" href="{% url "new_post" %}" class="button"> New Entry </a></li>
+                    <li><a class="customized" href="{% url "new_category" %}" class="button"> New Category </a></li> -->
+
+                    <li class="dropdown" style="cursor:pointer;">
+                          <a  class="dropdown-toggle" type="button" data-toggle="dropdown">Index <i class="fa fa-caret-down"></i></a>
+                          <ul class="dropdown-menu" style="color:white;background-color:rgba(0,0,0, 0.5);">
+
+                        {% for item in all_items %}
+                        	{% if item.heading %}
+                            <li><a
+                                    onmouseover='this.style.color="black"'
+                                    onmouseout='this.style.color="white"'
+                                    style="color:white;font-family:Verdana;font-size:17px;text-decoration:none;font-weight:500;"
+                                    href="#heading-{{item.pk}}">{{ item.text }}</a></li>
+
+                            {% elif item.subheading %}
+                            <li><a  class="indexSubheading"
+                                        onmouseover='this.style.color="black"'
+                                        onmouseout='this.style.color="white"'
+                                        style="color:white;font-family:Verdana;font-size:15px;text-decoration:none;font-weight:500;"
+                                        href="#subheading-{{item.pk}}">&nbsp;&nbsp;&nbsp;{{ item.text }}</a></li>
+
+                            {% elif item.is_index %}
+                            <li><a  class="indexSubheading"
+                                        onmouseover='this.style.color="black"'
+                                        onmouseout='this.style.color="white"'
+                                        style="color:white;font-family:Verdana;font-size:17px;text-decoration:none;font-weight:500;"
+                                        href="/newPost/{{item.text|safe}}"><i class="fa fa-sign-out"></i>{{item.text|cut_pk}} </a>
+                            </li>
+                                        <!-- " -->
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <div><a name="top"></a><div>
+
+    <!-- Page Header -->
+    {% if post.thumbnail %}
+    <header class="intro-header" style="background-image: url('/static/{{ post.thumbnail }}')">
+    {% else %}
+    <header class="intro-header" style="background-image: url('/static/img/default.jpg')">
+    {% endif %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+                    <div class="post-heading" >
+                        <h1>
+                            {{ post.title }}
+                        </h1>
+                        <h2 class="subheading"
+                            style="font-family: Verdana;
+                                   font-weight:normal;
+                                   font-size:23px;">
+                            {{ post.description }}
+                        </h2>
+                        <span class="post-meta"
+                              style="font-family: Verdana;
+                                     color:rgba(255, 255, 255, 0.50)">
+                                     <i class="fa fa-calendar-plus-o"></i> {{ post.updated_date|cut_date}}
+                                     <i class="fa fa-tags"></i> {{ post|cut_category }}
+
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+                <p>
+                <a class="btn btn-default editorMode" href="{% url "edit_post" pk=post.pk %}"> <i class="fa fa-pencil"></i> </a>
+                <a class="btn btn-default editorMode" href="{% url "delete_post" pk=post.pk %}" onclick="return confirm('Are you sure you want to delete this item?');">  <i class="fa fa-trash-o"></i>  </a>
+                </p>
+
+                <!-- <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Index
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+
+
+                {% for item in all_items %}
+                	{% if item.heading %}
+                    <li><a
+                            style="font-family:Verdana;font-size:25px;text-decoration:none;font-weight:500;"
+                            href="#heading-{{item.pk}}">{{ item.text }}</a></li>
+
+                    {% elif item.subheading %}
+                            <li><a
+                            style="font-family:Verdana;font-size:20px;text-decoration:none;font-weight:500;"
+                            href="#subheading-{{item.pk}}">&nbsp;&nbsp;&nbsp;{{ item.text }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+                </div> -->
+
+                {% if post.is_external %}
+                    <h2> Externals </h2>
+                {% endif %}
+
+                {% for item in all_items %}
+
+                {% if item.paragraph %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default disabled"> <i class="fa fa-file-text-o"></i> </a>
+                    {% if item.edited %}
+                    <a class="btn btn-default disabled"> <i class="fa fa-scissors"></i> </a>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p>{{ item.text }}</p>
+
+                    </div>
+                    {% endif %}
+
+                {% elif item.heading %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-header"></i> </a>
+                    {% if item.edited %} <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a> {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p><h2 class="section-heading"><a name="heading-{{item.pk}}"></a>{{ item.text }}</h2></p>
+
+                    </div>
+                    {% endif %}
+
+
+                {% elif item.inline_block %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-indent"></i></a>
+                    {% if item.edited %}
+                       <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p><blockquote style='font-style:normal;'>{{ item.text }}</blockquote></p>
+
+                    </div>
+                    {% endif %}
+
+                {% elif item.code %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-file-code-o"></i> </a>
+                    {% if item.edited %}
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p><pre><code>{{ item.text }}</code></pre></p>
+
+                    </div>
+                    {% endif %}
+
+                {% elif item.subheading %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled">
+                        <i class="fa fa-header"></i>
+                        <i class="fa fa-header"></i>
+                    </a>
+                    {% if item.edited %} <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a> {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p><h3 class="secondHeading"><a name="subheading-{{item.pk}}"></a>{{ item.text }}</h3></p>
+
+                    </div>
+                    {% endif %}
+
+
+                {% elif item.subsubheading %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled">
+                        <i class="fa fa-header"></i>
+                        <i class="fa fa-header"></i>
+                        <i class="fa fa-header"></i>
+                    </a>
+                    {% if item.edited %}
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p><h4 class="thirdHeading">{{ item.text }}</h4></p>
+
+                    </div>
+                    {% endif %}
+
+
+                {% elif item.list_item %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-list-alt"></i> </a>
+                    {% if item.edited %}
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p>
+                    <ul>
+                    <li>{{ item.text }} </li>
+                    </ul>
+                    </p>
+
+                    </div>
+                    {% endif %}
+
+                {% elif item.link %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-link"></i> </a>
+                    {% if item.edited %}
+                       <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p><a style="text-decoration:none;hower:color:#337ab7;" href="{{ item.text }}" target="_blank">{{ item.text|linkText }}</a></p>
+
+                    </div>
+                    {% endif %}
+
+                {% elif item.image %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-picture-o"></i> </a>
+                    {% if item.edited %}
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <!-- <div class="row">
+                        <div class="col-md-6"> -->
+                    <p><a href="/static/{{ item.file_item }}"> <img class="img-responsive" src="/static/{{ item.file_item }}" alt=""> </a></p>
+                    <!-- <span class="caption text-muted">
+                        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                    </span>
+                        </div>
+                    </div> -->
+
+
+                    </div>
+                    {% endif %}
+
+                {% elif item.other %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+                    <a class="btn btn-default btn-xs disabled"> <i class="fa fa-paperclip"></i> </a>
+                    {% if item.edited %}
+                        <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i></a>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default btn-xs" href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p><a style="text-decoration:none;hower:color:#337ab7;" href="/static/{{ item.file_item }}"> {{ item.file_item|cut_doc }} </a></p>
+
+                    </div>
+                    {% endif %}
+
+                {% elif item.video %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+        			<a class="btn btn-default btn-xs disabled"> <i class="fa fa-file-video-o"></i> </a>
+        			{% if item.edited %}
+        				<a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i></a>
+        			{% endif %}
+        			&nbsp;&nbsp;&nbsp;
+        			<a class="btn btn-default btn-xs" href="{% url "edit_general_file" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+        			<a class="btn btn-default btn-xs" href="{% url "delete_general_file" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    <p>
+                    <video controls   style="background-color:black;" poster="/static/img/videoDefault.jpg" id="{{ item.pk }}-video">
+                		<source src="/static/{{ item.file_item }}" type="video/mp4">
+                		<source "/static/{{ item.file_item }}" type="video/ogg">
+                	</video>
+                    </p>
+
+                    </div>
+
+                    <!-- Set Default Playback Rate to x2 for Class-->
+                    {% if "Class" in post|cut_category %}
+                        <script>
+                            var vid = document.getElementById('{{ item.pk }}-video');
+                            vid.defaultPlaybackRate = 2.0;
+                        </script>
+                    {% endif %}
+                    {% endif %}
+
+                {% elif item.is_safe %}
+
+                    {% if not post.is_external %}
+                    {% if post.is_editor %}
+                    <div class="jumbotron">
+                    <p>
+                    <a class="btn btn-default btn-xs disabled"> {{ item.position }} </a>
+        			<a class="btn btn-default btn-xs disabled"> <i class="fa fa-file-o"></i> </a>
+        			{% if item.edited %}
+        			  <a class="btn btn-default btn-xs disabled"> <i class="fa fa-scissors"></i> </a>
+        			{% endif %}
+        			&nbsp;&nbsp;&nbsp;
+        			<a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+        			<a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+                    {% else %}
+                    <div>
+                    {% endif %}
+
+                    {{ item.text|safe }}
+
+                    </div>
+                    {% endif %}
+
+                {% elif item.is_index %}
+
+                    {% if post.is_external %}
+
+
+                    <p style="font-size:17px;">
+                        <a class="btn btn-default btn-xs disabled"><i class="fa fa-sign-out"></i></a>
+                        <a class="btn btn-default btn-xs disable" style="text-decoration:none;" href="/newPost/{{ item.text|safe }}">{{ item.text|cut_pk }}</a>
+                        &nbsp;&nbsp;&nbsp;
+            			<a class="btn btn-default btn-xs" href="{% url "edit_general_text" pk=post.pk pks=item.pk %}" > <i class="fa fa-pencil"></i></a>
+            			<a class="btn btn-default btn-xs" href="{% url "delete_general_text" pk=item.pk ppk=post.pk %}"> <i class="fa fa-trash-o"></i></a>
+                    </p>
+
+                    {% endif %}
+
+                {% endif %}
+
+                {% endfor %}
+
+                <div><a name="bottom"></a><div>
+
+                <!-- Create new general text -->
+                <p class="editorMode">
+                	<a class="text-type-adjuster btn btn-default" id='heading'><i class="fa fa-header"></i></i></a>
+                	<a class="text-type-adjuster btn btn-default" id='subheading'>
+                        <i class="fa fa-header"></i><i class="fa fa-header"></i></a>
+                	<a class="text-type-adjuster btn btn-default" id='subsubheading'>
+                        <i class="fa fa-header"></i><i class="fa fa-header"></i><i class="fa fa-header"></i></a>
+                    <a class="text-type-adjuster btn btn-default btn btn-default" id='paragraph'><i class="fa fa-file-text-o"></i></a>
+                    <a class="text-type-adjuster btn btn-default" id='inline_block'><i class="fa fa-indent"></i></a>
+                	<a class="text-type-adjuster btn btn-default" id='code'><i class="fa fa-file-code-o"></i></a>
+                    <a class="text-type-adjuster btn btn-default" id='list_item'><i class="fa fa-list-alt"></i></a>
+                    <a class="text-type-adjuster btn btn-default" id='link'><i class="fa fa-link"></i></a>
+                    <a class="btn btn-danger text-type-adjuster btn-xs" id='is_safe'> <i class="fa fa-file-o"></i> </a>
+                    <a class="btn btn-warning text-type-adjuster btn-xs" id='is_index'> <i class="fa fa-map-signs"></i> </a>
+                </p>
+                <p class="editorMode">
+                    <a class="file-type-adjuster btn btn-default" id='image'><i class="fa fa-file-image-o"></i></a>
+                	<a class="file-type-adjuster btn btn-default" id='video'><i class="fa fa-file-video-o"></i></a>
+                	<a class="file-type-adjuster btn btn-default" id='other'><i class="fa fa-paperclip"></i></a>
+                </p>
+
+
+                <!-- Forms -->
+                <p class="editorMode">
+                	<form id="text-form" method="post" action="{% url "new_general_text" pk=post.pk %}" enctype="multipart/form-data" hidden='True'>
+                	{% csrf_token %}
+                	{{ general_text_form|crispy }}
+                	<input type="text" name="item_type" id='text-type-input' hidden='True'/>
+                	<input class="submitButton btn btn-default" type="submit" name="submit" value="Submit" />
+                	</form>
+
+                    <!-- <button  class="btn btn-default" id='text-cancel' hidden='True'> Cancel </button> -->
+
+                </p>
+
+
+
+                <p class="editorMode">
+                	<form id="file-form" method="post" action="{% url "new_general_file" pk=post.pk %}" enctype="multipart/form-data" hidden='True'>
+                	{% csrf_token %}
+                	{{ general_file_form|crispy }}
+                	<input type="text" name="file_type" id='file-type-input' hidden='True'/>
+                	<input class="submitButton btn btn-default" type="submit" name="submit" value="Submit" />
+                	</form>
+
+                    <!-- <button class="btn btn-default" id='file-cancel' hidden='True'> Cancel </button> -->
+                </p>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://twitter.com/skagankose" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/s%C3%BCha-ka%C4%9Fan-k%C3%B6se-9b8289111" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/skagankose" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">&copy; Seyahatname 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static "js/jquery.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/clean-blog.min.js" %}"></script>
+    <script src="{% static "js/newPost.js" %}"></script>
+
+   {% if post.is_editor %}
+       <script>
+       $(document).ready(function() {
+           $('.editorMode').show();
+           $('.offButton').hide();
+           $('.onButton').show();
+       })
+
+   {% else %}
+       <script>
+       $(document).ready(function() {
+           $('.editorMode').hide();
+           $('.offButton').show();
+           $('.onButton').hide();
+       })
+
+   {% endif %}
+
+   {% if post.is_external %}
+
+       $(document).ready(function() {
+           $('.externalMode').show();
+           $('.externalOffButton').hide();
+           $('.externalOnButton').show();
+       })
+       </script>
+   {% else %}
+
+       $(document).ready(function() {
+           $('.externalMode').hide();
+           $('.externalOffButton').show();
+           $('.externalOnButton').hide();
+       })
+       </script>
+   {% endif %}
+
+
+
+
+   </body>
+
+</html>

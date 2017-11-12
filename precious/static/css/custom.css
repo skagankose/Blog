@@ -1,0 +1,30 @@
+article p, button, form {
+	font-family:Verdana;
+	font-size:13px;
+}
+
+.customized {
+	font-family:Verdana;
+	font-size:13px;
+}
+
+aside{
+	font-family:Verdana;
+	font-size:11px;
+}
+
+h4, h3, h2, .btn-default{
+	font-family:Verdana;
+}
+
+.headerItem {
+	font-family:Verdana;
+	font-size: 13px;
+
+}
+
+footer {
+	font-family:Verdana;
+	font-size:11px;
+
+}
