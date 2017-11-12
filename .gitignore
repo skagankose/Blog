@@ -7,6 +7,6 @@
 *.png
 *.DS_STORE
 .com.apple.timemachine.donotpresent
-~/Documents/Projects/seyahatname/precious/migrations
-~/Documents/Projects/seyahatname/precious/__pycache__                 
-~/Documents/Projects/seyahatname/just_blog/__pycache__
+/precious/migrations
+/precious/__pycache__                 
+/just_blog/__pycache__
