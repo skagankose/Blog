@@ -12,3 +12,4 @@
 /precious/migrations
 /precious/__pycache__                 
 /just_blog/__pycache__
+db.sqlite3
