@@ -2,19 +2,29 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block image %}
-<header class="intro-header" style="background-image: url('/static/img/edit.jpg');">
+{% block head %}
+  <style>
+    .control-label {color:black !important;}
+  </style>
 {% endblock %}
 
-{% block header %}{% endblock %}
-
+{% block header %}<p>&nbsp;</p>{% endblock %}
 
 {% block content %}
+  <article >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <form id="form" method="post" action="{% url "edit_general_text" pk=post.pk pks=general_text.pk %}" enctype="multipart/form-data" style="color:white;">{% csrf_token %}
+              {{ form|crispy }}
+          <input class="btn btn-default" type="submit" name="submit" value="Submit" />
+          <a class="btn btn-default" onclick="goBack()">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </article>
+{% endblock %}
 
-        <form id="form" method="post" action="{% url "edit_general_text" pk=post.pk pks=general_text.pk %}" enctype="multipart/form-data" style="color:white;">{% csrf_token %}
-            {{ form|crispy }}
-        <input class="btn btn-default" type="submit" name="submit" value="Submit" />
-        <a class="btn btn-default" onclick="goBack()">Cancel</a>
-        </form>
-
+{% block footer %}
 {% endblock %}

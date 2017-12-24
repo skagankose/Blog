@@ -28,8 +28,8 @@ class Post(models.Model):
     category = models.ManyToManyField(Category, related_name='posts')
     edited = models.BooleanField(default=False)
     is_editor = models.BooleanField(default=True)
-    is_external = models.BooleanField(default=False)
-    # is_main = models.BooleanField(default=True)
+    white_theme = models.BooleanField(default=False)
+    published = models.BooleanField(default=True)
 
     def delete(self, *args, **kwargs):
         self.thumbnail.delete()
@@ -93,7 +93,6 @@ class GeneralText(models.Model):
     code = models.BooleanField(default=False)
     link = models.BooleanField(default=False)
     is_safe = models.BooleanField(default=False)
-    is_index = models.BooleanField(default=False)
     edited = models.BooleanField(default=False)
 
     class Meta:

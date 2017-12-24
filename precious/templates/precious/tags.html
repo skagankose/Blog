@@ -3,86 +3,80 @@
 {% load staticfiles %}
 
 {% block head %}
-<style>
-.tag:hover {
-    color:rgba(255,255,255,.8) !important;
-}
-</style>
+  <style>
+  .tag:hover {
+      color:rgba(0, 0, 0, 0.5) !important;
+  }
+  .tag {
+    font-family: "Open Sans";
+    font-size: 25px !important;
+    font-weight: 300 !important;
+    letter-spacing: 1px !important;
+    cursor:pointer !important;
+    color:black !important;
+    text-decoration:none !important;
+  }
+  </style>
 {% endblock %}
 
-<!-- white theme -->
-{% block background %}
-<body>
+{% block backgroundImage %}
+  <style>
+  @media (min-width: 767px) {
+    .intro-header {
+      background-image: url('/static/img/home-lg.jpg') !important;
+    }
+  }
+  @media (max-width: 767px) {
+    .intro-header {
+      background-image: url('/static/img/search-sm.jpg') !important;
+    }
+  }
+  </style>
 {% endblock %}
 
-<!-- white theme -->
-{% block navigation %}
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/" style="color:#404040;"><i class="fa fa-home fa-2x"></i></a>
+{% block header %}
+  <header class="intro-header">
+  <br><br>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="site-heading">
+            <p>
+              <i class="fa fa-tags" style="color:black;"></i>
+              {% for category in categories %}
+                  <a class='category-text tag' id='{{category.text}}'>
+                      {{ category.text|First }}{{ category.text|Rest }}
+                  </a>
+                  &nbsp;
+              {% endfor %}
+              {% csrf_token %}
+              <input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
+              <input type="text" name="category-text-name" id='category-text-input' hidden='true'/>
+            </p>
+          </div>
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
-            <ul class="nav navbar-nav navbar-right">
-
-                <li><a href="{% url "search" %}" class="button" style="color:#404040;"> Search </a></li>
-                <li><a href="{% url "tags" %}" class="button" style="color:#404040;"> Tags </a></li>
-                <li><a href="{% url "new_post" %}" class="button" style="color:#404040;"> New Post </a></li>
-                <li><a href="{% url "new_category" %}" class="button" style="color:#404040;"> New Category </a></li>
-
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
+      </div>
     </div>
-    <!-- /.container -->
-</nav>
-{% endblock %}
 
-{% block image %}
-<header class="intro-header" style="background-image: url('/static/img/tag.jpg');">
-{% endblock %}
-
-{% block title %}
-<p>
-    <i class="fa fa-tags" style="color:#404040;"></i>
-    {% for category in categories %}
-        <a class='category-text tag'
-            style="font-size: 23px;
-        	font-weight: 800;
-        	letter-spacing: 1px;
-        	cursor:pointer;
-        	color:#404040;
-            text-decoration:none;" id='{{category.text}}'>
-            {{ category.text|First }}<span style="font-size:13px">{{ category.text|Rest }}</span>
-        </a>
-    {% endfor %}
-</p>
+  <br><br>
+  </header>
+  <hr>
 {% endblock %}
 
 {% block content %}
-</div>
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-
-<div id='category-search-results' class="post-preview"></div>
-
-{% csrf_token %}
-<input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true'/>
-<input type="text" name="category-text-name" id='category-text-input' hidden='true'/>
-
+  <article class="articleHome">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div id='category-search-results' class="post-preview"></div>
+        </div>
+      </div>
+    </div>
+  </article>
 {% endblock %}
 
 {% block script %}
-
 	{% if post.is_editor %}
 	   <script>
 	   $(document).ready(function() {
@@ -100,5 +94,4 @@
 	   })
 	   </script>
 	{% endif %}
-
 {% endblock %}

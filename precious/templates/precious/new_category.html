@@ -2,21 +2,29 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block image %}
-<header class="intro-header" style="background-image: url('/static/img/category.jpg');">
+{% block head %}
+	<style>
+		.control-label {color:black !important;}
+	</style>
 {% endblock %}
 
-{% block header %}{% endblock %}
+{% block header %}<p>&nbsp;</p>{% endblock %}
 
 {% block content %}
-
-			<form id="form" method="post" action="/new_category/" enctype="multipart/form-data" style="color:white;">
-				{% csrf_token %}
-				{{ category_form|crispy }}
-				<input class="btn btn-default" type="submit" name="submit" value="Submit" />
-				<!-- <a class="btn btn-default" onclick="goBack()">Cancel</a> -->
-			</form>
-
+	<article >
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<form id="form" method="post" action="/new_category/" enctype="multipart/form-data" style="color:white;">
+						{% csrf_token %}
+						{{ category_form|crispy }}
+						<input class="btn btn-default" type="submit" name="submit" value="Submit" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</article>
 {% endblock %}
 
-{% block hr %}{% endblock %}
+{% block footer %}
+{% endblock %}

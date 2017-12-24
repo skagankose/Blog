@@ -1,0 +1,40 @@
+.navbar-brand {
+  color: white !important;
+}
+.navbar-brand:hover {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.icon-bar:hover {
+  background-color: rgba(0, 0, 0, 0)!important;
+}
+.icon-bar {
+  background-color: white !important;
+}
+@media (max-width: 767px) {
+  .droper {
+    color: white !important;
+    border: white 0.1px solid;
+  }
+  .droper:hover {
+    color: black !important;
+    background-color: rgba(255, 255, 255, 1) !important;
+    border-color: rgba(255, 255, 255, 1) !important
+  }
+}
+@media (min-width: 767px) {
+  .droper {
+    color: white !important;
+    border: none;
+  }
+  .droper:hover {
+    color: rgba(255, 255, 255, 0.7) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+}
+
+.headingPost, .subheadingPost, .metaPost {
+  color: white !important;
+}
+.inHeading {
+  border-color: white !important;
+}

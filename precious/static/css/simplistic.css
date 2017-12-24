@@ -1,0 +1,225 @@
+pre {
+	/*font-family: Verdana;*/
+	background-color: black;
+	font-size: 15px;
+    color: #00FF00;
+}
+
+.submitButton:hover, .active {
+	font-weight: bold;
+}
+
+.btn {
+    text-decoration: none;
+}
+.is_black {
+    color:black;
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+
+
+.text-type-adjuster, .file-type-adjuster {
+    cursor: pointer;
+}
+
+.home_element {
+	/*font-family: Verdana;*/
+	font-size: 15px;
+}
+
+.home_element_2 {
+	/*font-family: Verdana;*/
+	font-size: 13px;
+}
+
+.home_link {
+	text-decoration: none;
+}
+
+#tag {
+	/*text-transform: uppercase;*/
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 1px
+	cursor:pointer;
+	color:white;
+}
+
+::selection {
+    background: rgba(0,0,0,1) !important;
+  }
+/*post*/
+code {
+  font-family: "PT Mono" !important;
+}
+a.disabled {
+  text-decoration: none !important;
+}
+.articlePost {
+  font-family: "Open Sans" !important;
+  margin-top: 30px !important;
+  font-weight: 100 !important;
+}
+.headingPost {
+  font-family: "Open Sans" !important;
+  font-size: 55px !important;
+  font-weight: 600 !important;
+}
+.subheadingPost {
+  font-weight: 100 !important;
+  font-size: 25px !important;
+  margin-bottom: 5px !important;
+  margin-top: -3px !important;
+}
+.metaPost {
+  font-size: 20px !important;
+  font-family: "Open Sans" !important;
+  font-style: normal !important;
+  color: black !important;
+  font-weight: 100 !important;
+}
+.inHeading {
+  border-color: black;
+  /*max-width: 100px;*/
+  /*margin: 15px auto;*/
+  width: 20%;
+  border-width: 4px;
+  text-align:left; margin: 0 auto 0 0;
+  margin-top:10px;
+}
+.section-heading {
+  font-size: 36px;
+  margin-top: 40px;
+  font-weight: 600;
+}
+.secondHeading {
+  font-size: 27px;
+  margin-top: 40px;
+  font-weight: 600;
+}
+.thirdHeading {
+  font-size: 20px;
+  margin-top: 40px;
+  font-weight: 600;
+}
+a.text-type-adjuster {
+  margin-top: 5px !important;
+}
+.intro-header {
+  /*text-align: center !important;*/
+}
+a:hover {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+.btn-default:hover {
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  border-color: rgba(0, 0, 0, 0)  !important;
+}
+.navbar-default {
+  background-color: rgba(0,0,0,0) !important;
+}
+.post-title {
+  font-size: 35px !important;
+  font-family: "Open Sans" !important;
+  font-weight: 500 !important;
+}
+.post-subtitle {
+  font-size: 20px !important;
+  font-weight: 300 !important;
+}
+.post-meta {
+  font-family: "Open Sans" !important;
+  font-size: 15px !important;
+  font-style: normal !important;
+  color: rgba(0,0,0,0.5) !important;
+  font-weight: 300 !important;
+}
+.heading {
+  font-family: "Lora" !important;
+}
+.site-heading > p {
+  font-family: "Lora" !important;
+}
+.subheading {
+  font-weight: 100 !important;
+}
+#form {
+  font-family: "Open Sans" !important;
+}
+.navbar-brand {
+  color: black !important;
+}
+.navbar-brand:hover {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+.articleHome {
+  text-align: center !important;
+}
+@media (min-width: 767px) {
+  .droper {
+    margin-left: 10px;
+    margin-top: 5px;
+    color: black !important;
+  }
+  .droper:hover {
+    color: rgba(0, 0, 0, 0.5)  !important;
+  }
+
+}
+@media (max-width: 767px) {
+  .droper {
+    color: black !important;
+    border: solid black 0.1px;
+    background-color: rgba(255,255,255,0) !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 1px !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 1px !important;
+    margin-bottom: 3px !important;
+  }
+  .droper:hover {
+    color: white !important;
+    background-color: rgba(0, 0, 0, 1) !important;
+    border-color: rgba(0, 0, 0, 1) !important
+  }
+  .navbar-toggle {
+    border: none !important;
+    margin-right: 10px !important;
+  }
+  .navbar-toggle-active {
+    background-color: rgba(0,0,0,0) !important;
+  }
+
+  .navbar-toggle:hover {
+    background-color: rgba(0,0,0,0) !important;
+  }
+  #bs-example-navbar-collapse-1 {
+    border-bottom-left-radius: 7px !important;
+    border-bottom-right-radius: 7px !important;
+    border-top-left-radius: 7px !important;
+    border-top-right-radius: 7px !important;
+    border: none !important;
+    border-top: 0px;
+    text-align: right !important;
+    width: 10% !important;
+    float: right !important;
+  }
+  .navbar-custom {
+    border: none !important;
+  }
+  .icon-bar:hover {
+    background-color: rgba(0, 0, 0, 0)!important;
+  }
+  .icon-bar {
+    background-color: black !important;
+  }
+}
+
+.jumbotron {
+  background-color: rgba(0,0,0,0.1) !important;
+}

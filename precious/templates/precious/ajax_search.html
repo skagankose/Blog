@@ -1,28 +1,24 @@
 {% if posts.count > 0 %}
-    {% for post in posts %}
+  {% for post in posts %}
 
     {% if forloop.counter != 1 %}
-    <hr>
+      <hr>
     {% endif %}
+
     <a href="{% url "newPost" pk=post.pk %}">
-        <h2 class="post-title" style="font-size:30px;">
-        {{ post.title }}
+      <h2 class="post-title" style="font-size:30px;">
+      {{ post.title }}
         </h2>
         <h3 class="post-subtitle" style="font-size:23px;">
-        {{ post.description }}
-        </h3>
+      {{ post.description }}
+      </h3>
     </a>
     <p class="post-meta" style="font-size:17px;font-style:normal;">
-        <i class="fa fa-calendar"></i> {{ post.created_date|cut_date }}
-        <i class="fa fa-tags"></i> {{ post|cut_category }}
+      <i class="fa fa-calendar"></i> {{ post.created_date|cut_date }}
+      <i class="fa fa-tags"></i> {{ post|cut_category }}
     </p>
 
-    {% endfor %}
+  {% endfor %}
 {% else %}
-
-    <hr>
-    <p class="post-title" style="font-size:30px;">
-    n/a
-    </p>
-
+    <img class="img-responsive center-block" src="/static/img/na.gif" alt="">
 {% endif %}

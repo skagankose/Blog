@@ -2,17 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.defaulttags import register
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-# Combine query sets
 from itertools import chain
-
-# Get time
 from django.utils import timezone
-
-# Ours'
 from .forms import PostForm, GeneralTextForm, GeneralFileForm, CategoryForm, EditGeneralTextForm, EditGeneralFileForm, EditPostForm
 from .models import Post, GeneralText, GeneralFile, Category
-import random
 
 @register.filter
 def linkText(text):
@@ -48,8 +41,6 @@ def cut_category(post):
 
 @register.filter
 def cut_date(date):
-	# splitted = str(date).split()[0].split("-")
-	# return splitted[0][2:5] + splitted[1] + splitted[2]
 	return str(date.strftime('%B')) + " " + str(date.day) + ",  " + str(date.year)
 
 @register.filter
@@ -82,8 +73,7 @@ def homepage(request):
 	    # If page is out of range (e.g. 9999), deliver last page of results.
 	    posts = paginator.page(paginator.num_pages)
 
-	randNumber = (int(random.random() * len(posts))) + 1
-	context = {'posts':posts,'categories':categories,'randNumber':randNumber}
+	context = {'posts':posts,'categories':categories}
 
 	return render(request, 'precious/home.html', context)
 
@@ -174,8 +164,6 @@ def new_general_text(request, pk):
                 general_text.youtube = True
             elif item_type == 'is_safe':
                 general_text.is_safe = True
-            elif item_type == 'is_index':
-                general_text.is_index = True
 
             general_text.position = post.item_position
             general_text.save()
@@ -256,15 +244,16 @@ def delete_general_file(request, pk, ppk):
 
 # AJAX search
 def post_search(request):
-    if request.method == 'POST':
-        text_search = request.POST['text_search']
-        if text_search == '':
-            text_search = '✗'
-    else:
-        text_search = None
-    posts = Post.objects.filter(title__icontains=text_search)
-    context = {'posts': posts,}
-    return render(request, 'precious/ajax_search.html', context)
+	if request.method == 'POST':
+		text_search = request.POST['text_search']
+		if text_search == '':
+			text_search = None
+	else:
+		text_search = None
+
+	posts = Post.objects.filter(title__icontains=text_search)
+	context = {'posts': posts,}
+	return render(request, 'precious/ajax_search.html', context)
 
 # AJAX Category text search
 def category_text_search(request):
@@ -347,21 +336,6 @@ def editor_off(request, pk):
     post.is_editor = False
     post.save()
     return HttpResponseRedirect('/newPost/' + str(pk) + '/')
-
-def external_on(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    post.is_external = True
-    post.save()
-    return HttpResponseRedirect('/newPost/' + str(pk) + '/')
-
-def external_off(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    post.is_external = False
-    post.save()
-    return HttpResponseRedirect('/newPost/' + str(pk) + '/')
-
-def new_base(request):
-    return render(request,'precious/newBase.html', {})
 
 # Look Post in details
 def newPost(request, pk):

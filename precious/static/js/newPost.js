@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    // Set GeneralText buttons
+    // set general text buttons
     $('.text-type-adjuster').on('click', function() {
         $('#file-form').hide();
         $('.file-type-adjuster').removeClass("active");
@@ -16,7 +16,7 @@ $(document).ready(function() {
         $('#text-form').hide();
     })
 
-    // Set GeneralFile buttons
+    // set general file buttons
     $('.file-type-adjuster').on('click', function() {
         $('#text-form').hide();
         $('.file-type-adjuster').removeClass("active");

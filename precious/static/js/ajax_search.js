@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    // Set Category buttons
+    // set cattegory buttons
     $('.category-text').on('click', function() {
                     // .mouseover(function() {
 
@@ -10,7 +10,7 @@ $(document).ready(function() {
         $('#category-text-input').val(category_text);
     })
 
-    // Ajax search for Category of Post
+    // ajax search for category of posts
     $('.category-text').on('click', function() {
         $.ajax( {
 
@@ -19,17 +19,23 @@ $(document).ready(function() {
             data: {
                     'category-text-search' : $('#category-text-input').val(),
                     csrfmiddlewaretoken: $('#csrftoken').val()
-            }, 
+            },
             success: function SearchSuccess(data, textStatus, jqXHR) {
-                     $('#category-search-results').html(data); 
-            },   
-            dataType: 'html' 
+                     $('#category-search-results').html(data);
+            },
+            dataType: 'html'
         });
     });
 
+    $("#search").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#buttonSearch").click();
+        }
+    });
 
-    // Ajax search for title of Post
-    $('#search').on('keyup',function () {
+
+    // ajax search for title of posts
+    $('#buttonSearch').on('click',function () {
 
         $.ajax( {
 
@@ -38,13 +44,12 @@ $(document).ready(function() {
             data: {
                     'text_search' : $('#search').val(),
                     csrfmiddlewaretoken: $('#csrftoken').val()
-            }, 
+            },
             success: function SearchSuccess(data, textStatus, jqXHR) {
-                     $('#search_results').html(data); 
-            },   
-            dataType: 'html' 
+                     $('#search_results').html(data);
+            },
+            dataType: 'html'
         });
     });
 
 });
-

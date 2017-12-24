@@ -2,90 +2,127 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block background %}
-<body>
+{% block head %}
+<style>
+.site-heading {
+  color:black !important;
+  margin-top:50px !important;
+}
+</style>
+
 {% endblock %}
 
-{% block image %}
-    {% for post in posts %}
-        {% if forloop.counter == randNumber %}
-            {% if post.thumbnail|cut_img %}
-            <header class="intro-header" style="background-image: url('/static/img/{{ post.thumbnail|cut_img }}');">
-            {% else %}
-            <header class="intro-header" style="background-image: url('/static/img/home.jpg');">
-            {% endif %}
-        {% endif %}
-    {% endfor %}
+{% block backgroundImage %}
+  <style>
+  @media (min-width: 767px) {
+    .intro-header {
+      background-image: url('/static/img/home-lg.jpg') !important;
+    }
+  }
+  @media (max-width: 767px) {
+    .intro-header {
+      background-image: url('/static/img/home-sm.jpg') !important;
+    }
+  }
+  </style>
 {% endblock %}
 
+{% block header %}
+
+  <header class="intro-header">
 
 
-{% block title %}
-    <h1>Seyahatname</h1>
-    <hr class="small">
-    <span class="subheading">
-        İsim, edebiyat (seyahatna:me).<br/>
-        Bir yazarın gezip gördüğü yerlerden edindiği bilgi ve izlenimlerini anlattığı eser.
-    </span>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="site-heading">
+              <h1 class="heading">Seyahatname</h1>
+              <hr class="small">
+              <span class="subheading">
+                  İsim, edebiyat (seyahatna:me).<br/>
+                  Bir yazarın gezip gördüğü yerlerden edindiği bilgi ve izlenimlerini anlattığı eser.
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+  <hr>
 {% endblock %}
 
 {% block content %}
+  <article class="articleHome">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
+          {% for post in posts %}
+           {% if post.published %}
+            <div class="post-preview">
+                {% if forloop.counter != 1 %}
+                  <hr>
+                {% endif %}
+                <a href="{% url "newPost" pk=post.pk %}">
+                    <h2 class="post-title" style="font-size:30px;">
+                    {{ post.title }}
+                    </h2>
+                    <h3 class="post-subtitle" style="font-size:23px;">
+                    {{ post.description }}
+                    </h3>
+                </a>
+                <p class="post-meta">
+                    <i class="fa fa-calendar"></i> {{ post.created_date|cut_date }}
+                    &nbsp;
+                    <i class="fa fa-tags"></i> {{ post|cut_category }}
+                </p>
+            </div>
+            {% endif %}
+          {% endfor %}
 
-</div>
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
+          <div class="post-preview text-center">
+            {% if posts.number == 1 %}
+            {% else %}
+              <a class="btn btn-default" href="?page=1" >
+                <i class="fa fa-angle-left fa-lg"></i>
+              </a>
+            {% endif %}
 
-{% for post in posts %}
+            {% if posts.has_previous %}
+              <a class="btn btn-default" href="?page={{ posts.previous_page_number }}" >
+                {{ posts.previous_page_number }}
+              </a>
+            {% endif %}
 
-<div class="post-preview">
-    <a href="{% url "newPost" pk=post.pk %}">
-        <h2 class="post-title" style="font-size:30px;">
-        {{ post.title }}
-        </h2>
-        <h3 class="post-subtitle" style="font-size:23px;">
-        {{ post.description }}
-        </h3>
-    </a>
-    <p class="post-meta" style="font-size:17px;font-style:normal;">
-        <i class="fa fa-calendar"></i> {{ post.created_date|cut_date }}
-        <i class="fa fa-tags"></i> {{ post|cut_category }}
-    </p>
-<hr>
-</div>
-
-{% endfor %}
-
-<div class="pagination" >
-    <span class="step-links">
-        {% if posts.has_previous %}
-            <a class="btn btn-default" href="?page={{ posts.previous_page_number }}" >
-        {% else %}
             <a class="btn btn-default disabled">
-        {% endif %}
-                <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Newer Posts
+                {{ posts.number }}
             </a>
 
-        <span class="current">
-            <a class="btn btn-deafult disabled">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                {{ posts.number }} out of {{ posts.paginator.num_pages }}
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            </a>
-        </span>
+            {% if posts.has_next %}
+              <a class="btn btn-default" href="?page={{ posts.next_page_number }}" >
+                {{ posts.next_page_number }}
+              </a>
+            {% endif %}
 
-
-        {% if posts.has_next %}
-            <a class="btn btn-default" href="?page={{ posts.next_page_number }}" >
-        {% else %}
-            <a class="btn btn-default disabled">
-        {% endif %}
-                Older Posts <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-            </a>
-
-    </span>
-</div>
-
+            {% if posts.number == posts.paginator.num_pages %}
+            {% else %}
+              <a class="btn btn-default" href="?page={{ posts.paginator.num_pages }}" >
+                <i class="fa fa-angle-right fa-lg"></i>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
 {% endblock %}
 
 {% block break %}

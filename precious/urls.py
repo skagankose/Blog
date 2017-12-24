@@ -62,9 +62,4 @@ urlpatterns = [
     # Editor Off
     url(r'^editor_off/(?P<pk>[0-9]+)/', views.editor_off, name='editor_off'),
 
-    # External On
-    url(r'^external_on/(?P<pk>[0-9]+)/', views.external_on, name='external_on'),
-
-    # External Off
-    url(r'^external_off/(?P<pk>[0-9]+)/', views.external_off, name='external_off'),
 ]
