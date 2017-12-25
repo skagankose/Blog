@@ -3,10 +3,6 @@
 {% load staticfiles %}
 
 {% block head %}
-  <style>
-    .post-heading {color: black !important;}
-  </style>
-
   {% if post.white_theme %}
     <link href="{% static "css/whitePost.css" %}" rel="stylesheet" type="text/css">
   {% endif %}

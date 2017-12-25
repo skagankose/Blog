@@ -2,25 +2,6 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block head %}
-  <style>
-  .site-heading {
-    color: black !important;
-    margin-top:50px !important;
-  }
-  @media (min-width: 767px) {
-    .intro-header {
-      margin-bottom: 0px !important;
-    }
-  }
-  @media (max-width: 767px) {
-    .intro-header {
-      margin-bottom: -100px !important;
-    }
-  }
-  </style>
-{% endblock %}
-
 {% block backgroundImage %}
   <style>
   @media (min-width: 767px) {
@@ -33,17 +14,6 @@
       background-image: url('/static/img/home-sm.jpg') !important;
     }
   }
-  @media (max-width: 494px) {
-    .intro-header {
-      background-image: url('/static/img/home-xs.jpg') !important;
-    }
-  }
-  @media (max-width: 367px) {
-    .intro-header {
-      background-image: url('/static/img/home-xxs.jpg') !important;
-    }
-  }
-  }
   </style>
 {% endblock %}
 
@@ -51,11 +21,10 @@
 
   <header class="intro-header">
 
-
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          <div class="site-heading">
+          <div class="site-heading homeHeading">
               <h1 class="heading">Seyahatname</h1>
               <hr class="small">
               <span class="subheading">
@@ -67,6 +36,7 @@
       </div>
     </div>
 
+    <!-- ignore -->
     <br><br>
     <br><br>
     <br><br>
@@ -82,7 +52,7 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
           {% for post in posts %}
-             {% if post.published %}
+             {% if post.published or user.is_authenticated %}
               <div class="post-preview">
                   <a href="{% url "newPost" pk=post.pk %}">
                       <h2 class="post-title" style="font-size:30px;">

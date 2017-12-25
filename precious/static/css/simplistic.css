@@ -93,6 +93,7 @@ a.disabled {
   text-align:left; margin: 0 auto 0 0;
   margin-top:10px;
 }
+/*for post*/
 .section-heading {
   font-size: 36px;
   margin-top: 40px;
@@ -141,10 +142,12 @@ a:hover {
 .heading {
   font-family: "Lora" !important;
 }
+/*home search tag*/
 .site-heading > p {
   font-family: "Lora" !important;
 }
 .site-heading {
+	color: black !important;
 	margin-top: 20px !important;
 }
 .subheading {
@@ -169,9 +172,6 @@ a:hover {
 .articleHome {
   text-align: center !important;
 }
-.intro-header {
-	margin-bottom: -18px !important;
-}
 @media (min-width: 767px) {
   .droper {
     margin-left: 10px;
@@ -185,33 +185,32 @@ a:hover {
 		width: auto !important;
 		width: 60% !important;
 	}
+	/*for post*/
 	.postContainer {
 		margin-bottom: 250px !important;
 	}
 }
 @media (max-width: 767px){
-	.postContainer {
-		margin-bottom: 250px !important;
-	}
 	#search {
 		width: auto !important;
 		width: 80% !important;
 	}
   .droper {
-    color: black !important;
-    border: solid black 1px;
-    background-color: rgba(255,255,255,1) !important;
+    color: white !important;
+    border: solid white 1px;
+    background-color: rgba(0,0,0,1) !important;
     border-bottom-left-radius: 10px !important;
     border-bottom-right-radius: 1px !important;
     border-top-left-radius: 10px !important;
     border-top-right-radius: 1px !important;
     margin-bottom: 3px !important;
-		border-bottom: solid 3px black !important;
+		/*border-bottom: solid 3px black !important;*/
+		/*background-image: url('/static/img/default.jpg') !important;*/
   }
   .droper:hover {
-    color: white !important;
-    background-color: rgba(0, 0, 0, 1) !important;
-    border-color: rgba(0, 0, 0, 1) !important
+    color: black !important;
+    background-color: rgba(255, 255, 255, 1) !important;
+    border-color: rgba(255, 255, 255, 1) !important
   }
   .navbar-toggle {
     border: none !important;
@@ -220,7 +219,6 @@ a:hover {
   .navbar-toggle-active {
     background-color: rgba(0,0,0,0) !important;
   }
-
   .navbar-toggle:hover {
     background-color: rgba(0,0,0,0) !important;
   }
@@ -244,8 +242,45 @@ a:hover {
   .icon-bar {
     background-color: black !important;
   }
+	/*for post*/
+	.postContainer {
+		margin-bottom: 250px !important;
+	}
 }
 
 .jumbotron {
   background-color: rgba(0,0,0,0.1) !important;
+}
+
+/*for tag*/
+.tag:hover {
+		color:rgba(0, 0, 0, 0.5) !important;
+}
+.tag {
+	font-family: "Open Sans";
+	font-size: 25px !important;
+	font-weight: 300 !important;
+	letter-spacing: 1px !important;
+	cursor:pointer !important;
+	/*color:black !important;*/
+	text-decoration:none !important;
+}
+/*for search*/
+.searchBar {
+	font-family: "Open Sans";
+	font-size: 25px !important;
+	font-weight: 300 !important;
+	color:black !important;
+}
+/*for post*/
+.post-heading {
+	color: black !important;
+}
+/*for home*/
+.homeHeading {
+	/*margin-top:50px !important;*/
+}
+/*stick the hr*/
+.intro-header {
+	margin-bottom: -15px !important;
 }
