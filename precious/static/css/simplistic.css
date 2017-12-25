@@ -185,12 +185,12 @@ a:hover {
 		width: auto !important;
 		width: 60% !important;
 	}
-	.intro-container {
-		margin-bottom: 60px !important;
+	.postContainer {
+		margin-bottom: 250px !important;
 	}
 }
 @media (max-width: 767px){
-	.intro-container {
+	.postContainer {
 		margin-bottom: 250px !important;
 	}
 	#search {

@@ -3,27 +3,22 @@
 {% load staticfiles %}
 
 {% block head %}
-<style>
-.site-heading {
-  color: black !important;
-  margin-top:50px !important;
-}
-@media (min-width: 767px) {
-  .intro-header {
-    margin-bottom: 0px !important;
+  <style>
+  .site-heading {
+    color: black !important;
+    margin-top:50px !important;
   }
-}
-@media (max-width: 767px) {
-  .intro-header {
-    margin-bottom: 50px !important;
+  @media (min-width: 767px) {
+    .intro-header {
+      margin-bottom: 0px !important;
+    }
   }
-}
-
-.heading {
-  /*color: rgba(0,0,0,1) !important;*/
-}
-</style>
-
+  @media (max-width: 767px) {
+    .intro-header {
+      margin-bottom: -100px !important;
+    }
+  }
+  </style>
 {% endblock %}
 
 {% block backgroundImage %}
@@ -33,17 +28,17 @@
       background-image: url('/static/img/home-lg.jpg') !important;
     }
   }
-  @media (max-width: 767px) and (min-width: 480px) {
+  @media (max-width: 767px) {
     .intro-header {
       background-image: url('/static/img/home-sm.jpg') !important;
     }
   }
-  @media (max-width: 480px) {
+  @media (max-width: 494px) {
     .intro-header {
       background-image: url('/static/img/home-xs.jpg') !important;
     }
   }
-  @media (max-width: 370px) {
+  @media (max-width: 367px) {
     .intro-header {
       background-image: url('/static/img/home-xxs.jpg') !important;
     }
