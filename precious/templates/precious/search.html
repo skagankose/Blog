@@ -12,12 +12,12 @@
   }
   @media (min-width: 767px) {
     .intro-header {
-      background-image: url('/static/img/home-lg.jpg') !important;
+      background-image: url('/static/img/default-lg.jpg') !important;
     }
   }
   @media (max-width: 767px) {
     .intro-header {
-      background-image: url('/static/img/search-sm.jpg') !important;
+      background-image: url('/static/img/default-lg.jpg') !important;
     }
   }
   .site-heading {
@@ -29,7 +29,7 @@
 
 {% block header %}
   <header class="intro-header">
-  <br><br>
+
 
     <div class="container">
       <div class="row">
@@ -39,7 +39,7 @@
               {% csrf_token %}
               <input type='text' id='csrftoken' name='csrftoken' value="{{ csrf_token }}" hidden='true' />
               <span class="icon" style="color:black;"><i class="fa fa-search fa-fw"></i></span>
-              <input class="searchBar" type='text' id='search' name='search' size="29"/>
+              <input class="searchBar" type='text' id='search' name='search'/>
               <button id="buttonSearch" hidden='true'></button>
             </p>
           </div>

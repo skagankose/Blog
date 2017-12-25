@@ -7,9 +7,6 @@
     .post-heading {
       color: black !important;
     }
-    .intro-header {
-      margin-bottom: -20px !important;
-    }
   </style>
 
   {% if post.white_theme %}
@@ -74,7 +71,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
-                <div class="post-heading" >
+                <div class="intro-container post-heading" >
                     <h1 class="headingPost">
                         {{ post.title }}
                     <hr class="inHeading">
@@ -94,7 +91,6 @@
         </div>
     </div>
 
-  <br><br><br>
   </header>
   <hr>
 {% endblock %}
