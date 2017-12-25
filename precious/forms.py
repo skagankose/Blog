@@ -51,4 +51,4 @@ class EditGeneralFileForm(forms.ModelForm):
 class EditPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('thumbnail', 'white_theme', 'title', 'description', 'category', 'item_position')
+        fields = ('thumbnail', 'white_theme', 'title', 'description', 'category', 'item_position', 'published')

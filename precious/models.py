@@ -29,7 +29,7 @@ class Post(models.Model):
     edited = models.BooleanField(default=False)
     is_editor = models.BooleanField(default=True)
     white_theme = models.BooleanField(default=False)
-    published = models.BooleanField(default=True)
+    published = models.BooleanField(default=False)
 
     def delete(self, *args, **kwargs):
         self.thumbnail.delete()

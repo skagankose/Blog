@@ -58,26 +58,26 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
           {% for post in posts %}
-           {% if post.published %}
-            <div class="post-preview">
-                {% if forloop.counter != 1 %}
-                  <hr>
-                {% endif %}
-                <a href="{% url "newPost" pk=post.pk %}">
-                    <h2 class="post-title" style="font-size:30px;">
-                    {{ post.title }}
-                    </h2>
-                    <h3 class="post-subtitle" style="font-size:23px;">
-                    {{ post.description }}
-                    </h3>
-                </a>
-                <p class="post-meta">
-                    <i class="fa fa-calendar"></i> {{ post.created_date|cut_date }}
-                    &nbsp;
-                    <i class="fa fa-tags"></i> {{ post|cut_category }}
-                </p>
-            </div>
-            {% endif %}
+             {% if post.published %}
+              <div class="post-preview">
+                  <a href="{% url "newPost" pk=post.pk %}">
+                      <h2 class="post-title" style="font-size:30px;">
+                      {{ post.title }}
+                      </h2>
+                      <h3 class="post-subtitle" style="font-size:23px;">
+                      {{ post.description }}
+                      </h3>
+                  </a>
+                  <p class="post-meta">
+                      <i class="fa fa-calendar"></i> {{ post.created_date|cut_date }}
+                      &nbsp;
+                      <i class="fa fa-tags"></i> {{ post|cut_category }}
+                  </p>
+              </div>
+              {% if not forloop.last %}
+                <hr>
+              {% endif %}
+              {% endif %}
           {% endfor %}
 
         </div>

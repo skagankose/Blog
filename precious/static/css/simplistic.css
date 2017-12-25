@@ -40,6 +40,8 @@ video {
 	text-decoration: none;
 }
 
+/*last part*/
+
 #tag {
 	/*text-transform: uppercase;*/
 	font-size: 12px;
@@ -150,6 +152,7 @@ a:hover {
 }
 #form {
   font-family: "Open Sans" !important;
+	color:black !important;
 }
 .navbar-brand {
   color: black !important;
