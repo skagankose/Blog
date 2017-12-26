@@ -19,6 +19,7 @@ pre {
 video {
     width: 100%;
     height: auto;
+		/*border: rgba(225,225,225,1) solid 1px;*/
 }
 
 
@@ -113,11 +114,11 @@ a.text-type-adjuster {
   margin-top: 5px !important;
 }
 a:hover {
-  color: rgba(0, 0, 0, 0.5) !important;
+  color: rgba(130, 0, 0, 1) !important;
 }
 .btn-default:hover {
   color: white !important;
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background-color: rgba(130, 0, 0, 1) !important;
   border-color: rgba(0, 0, 0, 0)  !important;
 }
 .navbar-default {
@@ -167,7 +168,7 @@ a:hover {
   color: black !important;
 }
 .navbar-brand:hover {
-  color: rgba(0, 0, 0, 0.5) !important;
+  color: rgba(130, 0, 0, 1) !important;
 }
 .articleHome {
   text-align: center !important;
@@ -179,7 +180,7 @@ a:hover {
     color: black !important;
   }
   .droper:hover {
-    color: rgba(0, 0, 0, 0.5)  !important;
+    color: rgba(130, 0, 0, 1) !important;
   }
 	#search {
 		width: auto !important;
@@ -254,7 +255,10 @@ a:hover {
 
 /*for tag*/
 .tag:hover {
-		color:rgba(0, 0, 0, 0.5) !important;
+		color: rgba(0, 0, 0, 0) !important;
+		text-shadow: -0px 0 rgba(0, 0, 0, 0), 0 0px rgba(0, 0, 0, 0), 0px 0 rgba(0, 0, 0, 0), 0 -5px rgba(130,0,0,1);
+		background-color: rgba(255,255,255,0.1);
+		border-radius: 50px;
 }
 .tag {
 	font-family: "Open Sans";

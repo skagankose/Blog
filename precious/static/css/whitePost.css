@@ -2,7 +2,7 @@
   color: white !important;
 }
 .navbar-brand:hover {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(130,0,0,1) !important;
 }
 .icon-bar:hover {
   background-color: rgba(0, 0, 0, 0)!important;
@@ -29,8 +29,9 @@
     border: none;
   }
   .droper:hover {
-    color: rgba(255, 255, 255, 0.7) !important;
-    background-color: rgba(0, 0, 0, 0) !important;
+    border-color: rgba(0,0,0,0) !important;
+    background-color: rgba(0,0,0,0) !important;
+    color: rgba(130,0,0,1) !important;
   }
 }
 
